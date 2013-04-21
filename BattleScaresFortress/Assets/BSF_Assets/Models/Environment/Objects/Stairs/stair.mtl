@@ -1,0 +1,14 @@
+# Blender MTL File: ''
+# Material Count: 1
+newmtl ARCH_Rusty_Railings_w_ARCH_Rusty_Railin.001
+Ns 7.843137
+Ka 0.000000 0.000000 0.000000
+Kd 0.470400 0.470400 0.470400
+Ks 0.000000 0.000000 0.000000
+Ni 1.000000
+d 0.000000
+illum 2
+map_Kd Models\8jvsetnn27-concrete_roadblock\ARCH_Rusty_Railings_with_base_plate_D.tga
+map_Ka Models\\8jvsetnn27-concrete_roadblock\\ARCH_Rusty_Railings_with_base_plate_D.tga
+
+
