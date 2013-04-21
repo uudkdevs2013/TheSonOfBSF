@@ -1,18 +1,9 @@
-#################
-## Custom
-#################
 .DS_Store
-Library/AssetImportState
-Library/AssetServerCacheV3
-Library/FailedAssetImports.txt
-Library/ScriptAssemblies
-Library/ScriptMapper
-Library/assetDatabase3
-Library/cache
-Library/expandedItems
-Library/metadata
-Library/previews
-Library/guidmapper
+Library
+Library/*
+*.csproj
+*.sln
+*.userprefs
 Temp
 *.pidb
-build
+Build
