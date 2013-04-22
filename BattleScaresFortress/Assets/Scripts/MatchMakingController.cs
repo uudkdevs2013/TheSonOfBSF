@@ -10,6 +10,8 @@ public enum MatchMakingStatus
 public class MatchMakingController : Photon.MonoBehaviour
 {
 	
+	[SerializeField] private string _playerName;
+	
 	public static MatchMakingController Instance { get; private set; }
 	
 	private MatchMakingStatus _currentStatus;
@@ -24,7 +26,7 @@ public class MatchMakingController : Photon.MonoBehaviour
 	private void Awake()
 	{
 		Application.runInBackground = true;
-		PhotonNetwork.player.name = "name";
+		PhotonNetwork.player.name = _playerName;
 		Instance = this;
 	}
 	
