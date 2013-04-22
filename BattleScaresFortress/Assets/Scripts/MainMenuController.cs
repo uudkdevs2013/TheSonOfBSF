@@ -13,6 +13,7 @@ public class MainMenuController : MonoBehaviour
 			{
 				if (GUI.Button(new Rect(40, 80, 100, 30), "Start Match"))
 				{
+					PhotonNetwork.room.open = false;
 					RPCManager.Instance.StartMatch();
 				}
 			}
