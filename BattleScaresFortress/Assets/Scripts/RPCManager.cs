@@ -21,7 +21,7 @@ public class RPCManager : MonoBehaviour
 	[RPC]
 	private void rpcStartMatch()
 	{
-		Application.LoadLevel("Map1");
+		Application.LoadLevel("NetworkTestScene");
 	}
 	
 }
