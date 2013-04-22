@@ -3,7 +3,6 @@ using System.Collections;
 
 public class LevelLoader : MonoBehaviour
 {
-	
 	private void Start()
 	{
 		if (PhotonNetwork.isMasterClient)
@@ -15,5 +14,4 @@ public class LevelLoader : MonoBehaviour
 			}
 		}
 	}
-	
 }
