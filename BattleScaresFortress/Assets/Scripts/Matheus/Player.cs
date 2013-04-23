@@ -15,6 +15,11 @@ public class Player : MonoBehaviour
 		_allPlayers.AddLast(this);
 	}
 	
+	private void OnDestroy()
+	{
+		_allPlayers.Remove(this);
+	}
+	
 	
 	private static LinkedList<Player> _allPlayers;
 	
