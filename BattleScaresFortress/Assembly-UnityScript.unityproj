@@ -44,6 +44,8 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\BSF_Assets\Detonator Explosion Framework\Sample Supporting Emitters\Detonator Spray Helper.js" />
+     <Compile Include="Assets\BSF_Assets\Detonator Explosion Framework\TestScene\DetonatorTest.js" />
      <Compile Include="Assets\BSF_Assets\Standard Assets (Mobile)\Scripts\CameraRelativeControl.js" />
      <Compile Include="Assets\BSF_Assets\Standard Assets (Mobile)\Scripts\FirstPersonControl.js" />
      <Compile Include="Assets\BSF_Assets\Standard Assets (Mobile)\Scripts\FollowTransform.js" />
@@ -64,22 +66,38 @@
      <Compile Include="Assets\Scripts\Player\FPSInputController.js" />
      <None Include="Assets\BSF_Assets\Standard Assets (Mobile)\Shaders\Particle Shaders\Mobile Multiply Culled.shader" />
      <None Include="Assets\BSF_Assets\Standard Assets (Mobile)\Shaders\Miscellaneous Shaders\Mobile Background.shader" />
+     <None Include="Assets\AstarPathfindingProject\Editor\EditorAssets\Materials\Navmesh2.shader" />
      <None Include="Assets\BSF_Assets\Standard Assets (Mobile)\Shaders\Vertex Colored Shaders\Mobile Transparent Vertex Color.shader" />
+     <None Include="Assets\AstarPathfindingProject\Plugins\DotNetZip\License.txt" />
      <None Include="Assets\BSF_Assets\Standard Assets (Mobile)\Shaders\Miscellaneous Shaders\Mobile Detail.shader" />
      <None Include="Assets\BSF_Assets\Standard Assets\Particles\Sources\Shaders\Particle Alpha Blend (Queue +100).shader" />
      <None Include="Assets\Photon Unity Networking\Plugins\PhotonNetwork\library\Photon3Unity3D.xml" />
+     <None Include="Assets\BSF_Assets\Detonator Explosion Framework\Resources\Detonator\Textures\HeatDistort.shader" />
      <None Include="Assets\BSF_Assets\Standard Assets\Skyboxes\_skybox info.txt" />
      <None Include="Assets\Photon Unity Networking\Plugins\PhotonNetwork\library\release_history.txt" />
+     <None Include="Assets\AstarPathfindingProject\Editor\EditorAssets\Materials\Navmesh.shader" />
+     <None Include="Assets\AstarPathfindingProject\Plugins\dependencies.txt" />
      <None Include="Assets\BSF_Assets\Standard Assets\Water (Basic)\Sources\Shaders\FX-Water Simple.shader" />
      <None Include="Assets\BSF_Assets\Standard Assets (Mobile)\Shaders\Lightmap Shaders (Legacy)\Mobile Lightmap Reflective.shader" />
+     <None Include="Assets\AstarPathfindingProject\Readme_upgrading.txt" />
      <None Include="Assets\BSF_Assets\Standard Assets (Mobile)\Shaders\Particle Shaders\Mobile Particles Additive Culled.shader" />
+     <None Include="Assets\AstarPathfindingProject\Readme.txt" />
      <None Include="Assets\BSF_Assets\Standard Assets (Mobile)\Shaders\Vertex Colored Shaders\Mobile Vertex Colored.shader" />
      <None Include="Assets\BSF_Assets\Standard Assets (Mobile)\Shaders\Lightmap Shaders (Legacy)\Mobile Lightmap Only.shader" />
      <None Include="Assets\BSF_Assets\Standard Assets (Mobile)\Shaders\Lightmap Shaders (Legacy)\Mobile Lightmap AlphaTest.shader" />
      <None Include="Assets\Photon Unity Networking\readme.txt" />
+     <None Include="Assets\AstarPathfindingProject\Plugins\JsonFx\License.txt" />
+     <None Include="Assets\AstarPathfindingProject\Plugins\JsonFx\Readme.txt" />
      <None Include="Assets\BSF_Assets\Models\Environment\Objects\Trash\license.txt" />
      <None Include="Assets\Shaders\Color Only.shader" />
+     <None Include="Assets\AstarPathfindingProject\link.xml" />
      <None Include="Assets\Photon Unity Networking\changelog.txt" />
+ <Reference Include="Assets\AstarPathfindingProject\Plugins\DotNetZip\Ionic.Zip.Reduced">
+ <HintPath>Assets\AstarPathfindingProject\Plugins\DotNetZip\Ionic.Zip.Reduced.dll</HintPath>
+ </Reference>
+ <Reference Include="Assets\AstarPathfindingProject\Plugins\JsonFx\JsonFx.Json">
+ <HintPath>Assets\AstarPathfindingProject\Plugins\JsonFx\JsonFx.Json.dll</HintPath>
+ </Reference>
  <Reference Include="Assets\Photon Unity Networking\Plugins\PhotonNetwork\library\Photon3Unity3D">
  <HintPath>Assets\Photon Unity Networking\Plugins\PhotonNetwork\library\Photon3Unity3D.dll</HintPath>
  </Reference>
