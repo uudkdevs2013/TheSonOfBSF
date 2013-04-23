@@ -4,6 +4,9 @@ using System.Collections.Generic;
 public class Player : MonoBehaviour
 {
 	
+	[SerializeField] private PhotonView _photonView;
+	[SerializeField] private Camera _camera;
+	
 	Weapon weapon;
 	
 	private void Awake()
@@ -18,6 +21,31 @@ public class Player : MonoBehaviour
 	private void OnDestroy()
 	{
 		_allPlayers.Remove(this);
+	}
+	
+	private void Update()
+	{
+		if (_photonView.isMine)
+		{
+			if (Input.GetMouseButtonDown(0))
+			{
+				RaycastHit hit;
+				Ray ray = _camera.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2, 0));
+				if (Physics.Raycast(ray.origin, ray.direction, out hit, Mathf.Infinity))
+				{
+					print("raycast hit: " + hit.collider.name);
+					var enemy = hit.collider.gameObject.GetComponent<Enemy>();
+					if (enemy == null && hit.transform.parent != null)
+					{
+						enemy = hit.transform.parent.GetComponent<Enemy>();
+					}
+					if (enemy != null)
+					{
+						enemy.ApplyDamage(3);
+					}
+				}
+			}
+		}
 	}
 	
 	
