@@ -1,18 +1,26 @@
 using UnityEngine;
-using System.Collections;
+using System.Collections.Generic;
 
-public class Player : MonoBehaviour {
+public class Player : MonoBehaviour
+{
 	
-	public char playerClass;
 	Weapon weapon;
 	
-	// Use this for initialization
-	void Start () {
-		
+	private void Awake()
+	{
+		if (_allPlayers == null)
+		{
+			_allPlayers = new LinkedList<Player>();
+		}
+		_allPlayers.AddLast(this);
 	}
 	
-	// Update is called once per frame
-	void Update () {
 	
+	private static LinkedList<Player> _allPlayers;
+	
+	public static IEnumerable<Player> GetAllPlayers()
+	{
+		return (IEnumerable<Player>)_allPlayers;
 	}
+	
 }

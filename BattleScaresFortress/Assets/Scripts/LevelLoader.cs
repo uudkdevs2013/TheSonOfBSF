@@ -36,5 +36,12 @@ public class LevelLoader : MonoBehaviour
 		var cameraChild = localPlayer.transform.FindChild("Main Camera");
 		cameraChild.GetComponent<MouseLook>().enabled = true;
 		cameraChild.GetComponent<AudioListener>().enabled = true;
+		
+		if (PhotonNetwork.isMasterClient)
+		{
+			yield return new WaitForSeconds(5);
+			var drone = PhotonNetwork.Instantiate("Drone", new Vector3(800, 100, 800), Quaternion.Euler(0, 0, 0), 0);
+			drone.GetComponent<Hover>().enabled = true;
+		}
 	}
 }

@@ -1,46 +1,70 @@
 using UnityEngine;
-using System.Collections;
+using System.Collections.Generic;
 
-public class Hover : MonoBehaviour {
+public class Hover : MonoBehaviour
+{
 	
 	// Hover-related 
 	[SerializeField]
-	float desiredHeight;									// The desired height the object should hover
-	float hoverHeight;										// The current hover height
+	private float desiredHeight;									// The desired height the object should hover
+	private float hoverHeight;										// The current hover height
 	[SerializeField]
-	float hoverVelocity;									// The hover velocity 
+	private float hoverVelocity;									// The hover velocity 
 	
 	// Player following-related
 	[SerializeField]
-	float maxVelocity;										// Max following velocity
+	private float maxVelocity;										// Max following velocity
 	[SerializeField]
-	float minDistance;										// Minimun distance to keep from player
-	float distanteToPlayer;									// Current distance to player
-	float velocity;											// Current following velocity
+	private float minDistance;										// Minimun distance to keep from player
+	private float distanteToPlayer;									// Current distance to player
+	private float velocity;											// Current following velocity
 	
 	// Target
 	[SerializeField]
-	GameObject target;
-	
-	// Use this for initialization
-	void Start () {
-	
-	}
+	private GameObject target = null;
 	
 	// Update is called once per frame
-	void Update () {
-		maintainHeight();
-		followPlayer();	
+	private void Update()
+	{
+		if (target == null)
+		{
+			FindTarget();
+		}
+		else
+		{
+			maintainHeight();
+			followPlayer();
+		}
+	}
+	
+	private void FindTarget()
+	{
+		Player closestPlayer = null;
+		float closestDistance = float.MaxValue;
+		foreach (var player in Player.GetAllPlayers())
+		{
+			float distance = Vector3.Distance(player.transform.position, transform.position);
+			if (distance < closestDistance)
+			{
+				closestPlayer = player;
+				closestDistance = distance;
+			}
+		}
+		target = closestPlayer.gameObject;
 	}
 	
 	// Maintain desired height
-	void maintainHeight () {		
+	private void maintainHeight()
+	{
 		float terrainHeight = Terrain.activeTerrain.SampleHeight(transform.position);
 		float targetHeight = target.transform.position.y;
 		if (terrainHeight < targetHeight)
-			hoverHeight = transform.position.y -  targetHeight;
-		else
+		{
+			hoverHeight = transform.position.y - targetHeight;
+		} else
+		{
 			hoverHeight = transform.position.y - terrainHeight;
+		}
 		
 		if (hoverHeight != desiredHeight)
 		{
@@ -51,16 +75,20 @@ public class Hover : MonoBehaviour {
 	}
 	
 	// Making it follow the target
-	void followPlayer () {
+	private void followPlayer()
+	{
 		transform.LookAt(target.transform); 
 		distanteToPlayer = Vector3.Distance(transform.position, target.transform.position);
 		velocity = distanteToPlayer - minDistance;
 		if (velocity > maxVelocity)
+		{
 			velocity = maxVelocity;
-		if (distanteToPlayer > minDistance) {
-			transform.position += transform.forward * velocity * Time.deltaTime;
 		}
-		else if (distanteToPlayer < minDistance) {
+		if (distanteToPlayer > minDistance)
+		{
+			transform.position += transform.forward * velocity * Time.deltaTime;
+		} else if (distanteToPlayer < minDistance)
+		{
 			velocity = distanteToPlayer + minDistance;
 			transform.position -= transform.forward * (1 * velocity) * Time.deltaTime;
 		}
