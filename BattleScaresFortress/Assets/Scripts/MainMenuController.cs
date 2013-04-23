@@ -14,7 +14,7 @@ public class MainMenuController : MonoBehaviour
 				
 				if (GUI.Button(new Rect(w - 50, h - 15, 100, 30), "Start Match"))
 				{
-					RPCManager.Instance.StartMatch();
+					MatchMakingController.Instance.StartMatch();
 				}
 			}
 		}

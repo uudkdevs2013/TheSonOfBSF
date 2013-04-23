@@ -7,32 +7,24 @@ public class RPCManager : MonoBehaviour
 	
 	[SerializeField] PhotonView _pv;
 	
+	private Dictionary<string, bool> _levelsLoaded;
+	public bool AllLevelsAreLoaded { get; private set; }
+	
 	private void Awake()
 	{
 		Instance = this;
-		DontDestroyOnLoad(this);
-	}
-	
-	public void StartMatch()
-	{
-		_pv.RPC("rpcStartMatch", PhotonTargets.All);
-	}
-	
-	[RPC] private void rpcStartMatch()
-	{
 		_levelsLoaded = new Dictionary<string, bool>();
 		foreach (var player in PhotonNetwork.playerList)
 		{
 			_levelsLoaded.Add(player.name, false);
 		}
 		AllLevelsAreLoaded = false;
-		
-		Application.LoadLevel("Map1");
 	}
 	
-	
-	private Dictionary<string, bool> _levelsLoaded;
-	public bool AllLevelsAreLoaded { get; private set; }
+	private void OnDestroy()
+	{
+		Instance = null;
+	}
 	
 	public void MyLevelIsLoaded()
 	{

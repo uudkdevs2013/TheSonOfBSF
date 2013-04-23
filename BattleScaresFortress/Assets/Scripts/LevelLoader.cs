@@ -19,11 +19,13 @@ public class LevelLoader : MonoBehaviour
 		GameObject localPlayer;
 		if (PhotonNetwork.isMasterClient)
 		{
-			localPlayer = PhotonNetwork.Instantiate("FirstPersonController", new Vector3(0, 50, 0), Quaternion.Euler(0, 0, 0), 0);
+			print("level loader master client");
+			localPlayer = PhotonNetwork.Instantiate("FirstPersonController", new Vector3(1006, 50, 1042), Quaternion.Euler(0, 0, 0), 0);
 		}
 		else
 		{
-			localPlayer = PhotonNetwork.Instantiate("FirstPersonController", new Vector3(200, 50, 0), Quaternion.Euler(0, 0, 0), 0);
+			print("level loader not master client");
+			localPlayer = PhotonNetwork.Instantiate("FirstPersonController", new Vector3(1010, 50, 1050), Quaternion.Euler(0, 0, 0), 0);
 		}
 		localPlayer.GetComponent<CharacterController>().enabled = true;
 		localPlayer.GetComponent<MouseLook>().enabled = true;

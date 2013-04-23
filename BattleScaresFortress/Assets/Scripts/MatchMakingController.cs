@@ -11,6 +11,7 @@ public class MatchMakingController : Photon.MonoBehaviour
 {
 	
 	[SerializeField] private string _playerName;
+	[SerializeField] PhotonView _pv;
 	
 	public static MatchMakingController Instance { get; private set; }
 	
@@ -48,6 +49,17 @@ public class MatchMakingController : Photon.MonoBehaviour
 				GUI.Label(new Rect(Screen.width - 400, i * 30 + 50, 200, 20), PhotonNetwork.otherPlayers[i].name);
 			}
 		}
+	}
+	
+	public void StartMatch()
+	{
+		_pv.RPC("rpcStartMatch", PhotonTargets.All);
+	}
+	
+	[RPC]
+	private void rpcStartMatch()
+	{
+		Application.LoadLevel("NetworkTestScene");
 	}
 	
 	// these are in the enum: PhotonNetworkingMessage
