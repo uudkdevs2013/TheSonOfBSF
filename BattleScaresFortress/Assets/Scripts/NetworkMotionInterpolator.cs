@@ -23,7 +23,7 @@ public class NetworkMotionInterpolator : MonoBehaviour
 		{
 //			_velocity = transform.position - _oldPosition;
 //			_oldPosition = transform.position;
-			_velocity = _motor.GetComponent<CharacterMotor>().Movement.Velocity;
+			_velocity = _motor.Movement.Velocity;
 		}
 		else
 		{
