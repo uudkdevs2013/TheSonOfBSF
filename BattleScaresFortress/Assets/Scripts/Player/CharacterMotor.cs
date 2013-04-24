@@ -45,7 +45,7 @@ public class CharacterMotor : MonoBehaviour
 	}
 	
 	[System.Serializable]
-	private class CharacterMotorMovement
+	public class CharacterMotorMovement
 	{
 		// The maximum horizontal speed when moving
 		public float maxForwardSpeed = 10.0f;
@@ -136,6 +136,13 @@ public class CharacterMotor : MonoBehaviour
 	}
 	
 	[SerializeField] private CharacterMotorMovement movement = new CharacterMotorMovement();
+	public CharacterMotorMovement Movement
+	{
+		get
+		{
+			return movement;
+		}
+	}
 	
 	enum MovementTransferOnJump
 	{

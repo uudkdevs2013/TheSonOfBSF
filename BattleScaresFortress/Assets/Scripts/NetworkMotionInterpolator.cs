@@ -6,12 +6,14 @@ public class NetworkMotionInterpolator : MonoBehaviour
 	
 	[SerializeField] private PhotonView _photonView;
 	
-	private Vector3 _oldPosition;
+	[SerializeField] private CharacterMotor _motor;
+	
+//	private Vector3 _oldPosition;
 	private Vector3 _velocity;
 	
 	private void Start()
 	{
-		_oldPosition = transform.position;
+//		_oldPosition = transform.position;
 		_velocity = Vector3.zero;
 	}
 	
@@ -19,23 +21,25 @@ public class NetworkMotionInterpolator : MonoBehaviour
 	{
 		if (_photonView.isMine)
 		{
-			_velocity = Vector3.Normalize(transform.position - _oldPosition);
-			_oldPosition = transform.position;
+//			_velocity = transform.position - _oldPosition;
+//			_oldPosition = transform.position;
+			_velocity = _motor.GetComponent<CharacterMotor>().Movement.Velocity;
 		}
 		else
 		{
+//			rigidbody.velocity = _velocity;
 			transform.position += _velocity * Time.deltaTime;
 		}
 	}
 	
 	private void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
 	{
-		print("on serialize view");
 		if (stream.isWriting)
 		{
 			// we own this player; send data
 			stream.SendNext(transform.position);
-			stream.SendNext(_velocity);
+//			stream.SendNext(_velocity);
+			stream.SendNext(rigidbody.velocity);
 		}
 		else
 		{
