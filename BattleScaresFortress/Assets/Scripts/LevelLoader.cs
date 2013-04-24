@@ -5,6 +5,7 @@ public class LevelLoader : MonoBehaviour
 {
 	private void Start()
 	{
+		PhotonNetwork.isMessageQueueRunning = true;
 		RPCManager.Instance.MyLevelIsLoaded();
 		StartCoroutine(WaitAndSpawnPlayer());
 	}
