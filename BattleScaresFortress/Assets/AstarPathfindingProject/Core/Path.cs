@@ -262,7 +262,7 @@ yield return p.WaitForPath ();
 			_errorLog += msg;
 			
 			if (AstarPath.active.logPathResults != PathLog.None && AstarPath.active.logPathResults != PathLog.InGame) {
-				Debug.LogWarning (msg);
+				//Debug.LogWarning (msg);
 			}
 		}
 		

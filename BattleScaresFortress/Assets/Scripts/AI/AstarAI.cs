@@ -27,11 +27,12 @@ public class AstarAI : MonoBehaviour {
     public void Start () {
         seeker = GetComponent<Seeker>();
         controller = GetComponent<CharacterController>();
+		FindTarget();
         InvokeRepeating("GetPath",0.0f,repeatTime);   
     }
     
     public void OnPathComplete (Path p) {
-        Debug.Log ("Yey, we got a path back. Did it have an error? "+p.error);
+        //Debug.Log ("Yey, we got a path back. Did it have an error? "+p.error);
         if (!p.error) {
             path = p;
             //Reset the waypoint counter
@@ -40,13 +41,18 @@ public class AstarAI : MonoBehaviour {
     }
  
     public void FixedUpdate () {
+		if (target == null)
+		{
+			FindTarget();
+		}
+		
         if (path == null) {
             //We have no path to move after yet
             return;
         }
         
         if (currentWaypoint >= path.vectorPath.Count) {
-            Debug.Log ("End Of Path Reached");
+            //Debug.Log ("End Of Path Reached");
             return;
         }
         
@@ -65,5 +71,20 @@ public class AstarAI : MonoBehaviour {
 	
 	void GetPath() {
 		seeker.StartPath (transform.position,target.transform.position, OnPathComplete);
+	}
+	private void FindTarget()
+	{
+		Player closestPlayer = null;
+		float closestDistance = float.MaxValue;
+		foreach (var player in Player.GetAllPlayers())
+		{
+			float distance = Vector3.Distance(player.transform.position, transform.position);
+			if (distance < closestDistance)
+			{
+				closestPlayer = player;
+				closestDistance = distance;
+			}
+		}
+		target = closestPlayer.gameObject;
 	}
 }
