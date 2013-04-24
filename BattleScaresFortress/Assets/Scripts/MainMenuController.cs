@@ -46,7 +46,7 @@ public class MainMenuController : MonoBehaviour
 					MatchMakingController.Instance.StartMatch("NetworkTestScene");
 				}
 				
-				if (GUI.Button(new Rect(200, 200, 150, 30), "Test ScriptsTestScene"))
+				if (GUI.Button(new Rect(w - 50, h + 25, 150, 30), "Test ScriptsTestScene"))
 				{
 					MatchMakingController.Instance.StartMatch("ScriptsTestScene");
 				}
