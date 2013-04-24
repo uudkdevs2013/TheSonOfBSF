@@ -41,14 +41,25 @@ public class MatchMakingController : Photon.MonoBehaviour
 		GUI.Label(new Rect(10, Screen.height - 45, 1000, 20), "Photon Status: " + PhotonNetwork.connectionState.ToString());
 		GUI.Label(new Rect(10, Screen.height - 25, 1000, 20), "Matchmaking Status: " + _currentStatus);
 		
-		if (_currentStatus == MatchMakingStatus.InRoom)
-		{
-			GUI.Label(new Rect(Screen.width - 400, 20, 200, 20), "My name: " + PhotonNetwork.player.name + " " + PhotonNetwork.isMasterClient);
-			for (int i = 0; i < PhotonNetwork.otherPlayers.Length; ++i)
-			{
-				GUI.Label(new Rect(Screen.width - 400, i * 30 + 50, 200, 20), PhotonNetwork.otherPlayers[i].name);
-			}
-		}
+//		if (_currentStatus == MatchMakingStatus.InRoom)
+//		{
+//			GUI.Label(new Rect(Screen.width - 400, 20, 200, 20), "My name: " + PhotonNetwork.player.name + " " + PhotonNetwork.isMasterClient);
+//			for (int i = 0; i < PhotonNetwork.otherPlayers.Length; ++i)
+//			{
+//				GUI.Label(new Rect(Screen.width - 400, i * 30 + 50, 200, 20), PhotonNetwork.otherPlayers[i].name);
+//			}
+//		}
+	}
+	
+	public void CreateRoom(string roomName)
+	{
+		PhotonNetwork.CreateRoom(roomName);
+		_currentStatus = MatchMakingStatus.CreatingRoom;
+	}
+	
+	public void JoinRoom(string roomName)
+	{
+		PhotonNetwork.JoinRoom(roomName);
 	}
 	
 	public void StartMatch(string level)
@@ -79,7 +90,6 @@ public class MatchMakingController : Photon.MonoBehaviour
 	private void OnJoinedLobby()
 	{
 		_currentStatus = MatchMakingStatus.InLobby;
-		PhotonNetwork.JoinRandomRoom();
 	}
 	
 	private void OnLeftLobby()
@@ -101,13 +111,11 @@ public class MatchMakingController : Photon.MonoBehaviour
 	
 	private void OnPhotonRandomJoinFailed()
 	{
-		Debug.Log("Random join failed");
-		PhotonNetwork.CreateRoom(Time.time.ToString());
-		_currentStatus = MatchMakingStatus.CreatingRoom;
 	}
 	
 	private void OnPhotonCreateRoomFailed()
 	{
+		Debug.Log("create room failed");
 	}
 	
 	private void OnPhotonJoinRoomFailed()
