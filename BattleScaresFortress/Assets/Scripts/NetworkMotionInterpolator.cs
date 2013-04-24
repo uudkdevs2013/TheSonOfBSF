@@ -38,8 +38,7 @@ public class NetworkMotionInterpolator : MonoBehaviour
 		{
 			// we own this player; send data
 			stream.SendNext(transform.position);
-//			stream.SendNext(_velocity);
-			stream.SendNext(rigidbody.velocity);
+			stream.SendNext(_velocity);
 		}
 		else
 		{
