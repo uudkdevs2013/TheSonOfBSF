@@ -51,16 +51,16 @@ public class MatchMakingController : Photon.MonoBehaviour
 		}
 	}
 	
-	public void StartMatch()
+	public void StartMatch(string level)
 	{
-		_pv.RPC("rpcStartMatch", PhotonTargets.All);
+		_pv.RPC("rpcStartMatch", PhotonTargets.All, level);
 	}
 	
 	[RPC]
-	private void rpcStartMatch()
+	private void rpcStartMatch(string level)
 	{
 		PhotonNetwork.isMessageQueueRunning = false;
-		Application.LoadLevel("NetworkTestScene");
+		Application.LoadLevel(level);
 	}
 	
 	// these are in the enum: PhotonNetworkingMessage
