@@ -59,6 +59,7 @@ public class MatchMakingController : Photon.MonoBehaviour
 	[RPC]
 	private void rpcStartMatch()
 	{
+		PhotonNetwork.isMessageQueueRunning = false;
 		Application.LoadLevel("NetworkTestScene");
 	}
 	
