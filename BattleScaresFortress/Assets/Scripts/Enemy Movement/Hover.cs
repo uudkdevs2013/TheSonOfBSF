@@ -89,8 +89,8 @@ public class Hover : MonoBehaviour
 			transform.position += transform.forward * velocity * Time.deltaTime;
 		} else if (distanteToPlayer < minDistance)
 		{
-			velocity = distanteToPlayer + minDistance;
-			transform.position -= transform.forward * (1 * velocity) * Time.deltaTime;
+			//velocity = distanteToPlayer + minDistance;
+			transform.position += transform.forward * velocity * Time.deltaTime;
 		}
 
 	}

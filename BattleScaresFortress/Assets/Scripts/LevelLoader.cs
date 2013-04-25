@@ -43,7 +43,8 @@ public class LevelLoader : MonoBehaviour
 			yield return new WaitForSeconds(5);
 			var drone = PhotonNetwork.Instantiate("Drone", new Vector3(800, 100, 800), Quaternion.Euler(0, 0, 0), 0);
 			drone.GetComponent<Hover>().enabled = true;
-			var groundEnemy = PhotonNetwork.Instantiate("GroundEnemy", new Vector3(1017, 30, 1054), Quaternion.Euler(0, 0, 0), 0);
+			var crawler = PhotonNetwork.Instantiate("Crawler", new Vector3(1017, 30, 1054), Quaternion.Euler(0, 0, 0), 0);
+			var groundEnemy = PhotonNetwork.Instantiate("GroundEnemy", new Vector3(1022, 30, 1054), Quaternion.Euler(0, 0, 0), 0);
 		}
 	}
 }
