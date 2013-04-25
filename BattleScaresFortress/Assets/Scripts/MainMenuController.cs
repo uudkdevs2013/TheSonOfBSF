@@ -6,9 +6,35 @@ public class MainMenuController : MonoBehaviour
 	
 	private string _roomName = "";
 	
+	private string _ipAddress = "192.168.1.143";
+	private string _port = "5055";
+	
 	private void OnGUI()
 	{
-		if (MatchMakingController.Instance.CurrentStatus == MatchMakingStatus.InLobby)
+		if (MatchMakingController.Instance.CurrentStatus == MatchMakingStatus.NotConnected)
+		{
+			int w = (int)(Screen.width * 0.25f);
+			int h = (int)(Screen.height * 0.25f + 100);
+			
+			if (GUI.Button(new Rect(w - 50, h - 15, 200, 30), "Connect to remote server"))
+			{
+				MatchMakingController.Instance.ConnectToRemoteServers();
+			}
+			
+			GUI.Label(new Rect(w - 50, h + 35, 70, 20), "IP Address:");
+			_ipAddress = GUI.TextField(new Rect(w + 30, h + 35, 110, 20), _ipAddress, 15);
+			GUI.Label(new Rect(w - 8, h + 65, 28, 20), "Port:");
+			_port = GUI.TextField(new Rect(w + 30, h + 65, 50, 20), _port, 5);
+			if (GUI.Button(new Rect(w - 50, h + 95, 190, 30), "Connect to custom server"))
+			{
+				int port;
+				if (System.Int32.TryParse(_port, out port))
+				{
+					MatchMakingController.Instance.ConnectToCustomServer(_ipAddress, port);
+				}
+			}
+		}
+		else if (MatchMakingController.Instance.CurrentStatus == MatchMakingStatus.InLobby)
 		{
 			int w = (int)(Screen.width * 0.25f);
 			int h = (int)(Screen.height * 0.25f + 100);

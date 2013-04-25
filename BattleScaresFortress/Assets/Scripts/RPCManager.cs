@@ -26,6 +26,11 @@ public class RPCManager : MonoBehaviour
 		Instance = null;
 	}
 	
+	private void OnGUI()
+	{
+		GUI.Label(new Rect(10, 10, 200, 20), "Current Ping: " + PhotonNetwork.GetPing());
+	}
+	
 	public void MyLevelIsLoaded()
 	{
 		_pv.RPC("rpcOtherLevelLoaded", PhotonTargets.All, PhotonNetwork.player.name);
