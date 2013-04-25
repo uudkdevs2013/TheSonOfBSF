@@ -1,5 +1,5 @@
 using UnityEngine;
-using System.Collections;
+using System.Collections.Generic;
 
 public class Enemy : MonoBehaviour
 {
@@ -11,6 +11,11 @@ public class Enemy : MonoBehaviour
 	private void Awake()
 	{
 		Health = 10;
+		if (_allEnemies == null)
+		{
+			_allEnemies = new List<Enemy>();
+		}
+		_allEnemies.Add(this);
 	}
 	
 	public void ApplyDamage(float amountOfDamage)
@@ -36,6 +41,24 @@ public class Enemy : MonoBehaviour
 		{
 			PhotonNetwork.Destroy(gameObject);
 		}
+	}
+	
+	private void OnDestroy()
+	{
+		_allEnemies.Remove(this);
+	}
+	
+	
+	private static List<Enemy> _allEnemies = null;
+	
+	public static IEnumerable<Enemy> AllEnemies()
+	{
+		return (IEnumerable<Enemy>)_allEnemies;
+	}
+	
+	public static int NumberOfEnemies()
+	{
+		return _allEnemies.Count;
 	}
 	
 }

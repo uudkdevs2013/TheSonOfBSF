@@ -53,10 +53,11 @@ public class MainMenuController : MonoBehaviour
 			}
 			
 			// show the other players
-			GUI.Label(new Rect(Screen.width - 400, 20, 200, 20), "My name: " + PhotonNetwork.player.name + " " + PhotonNetwork.isMasterClient);
+			GUI.Label(new Rect(Screen.width - 400, 20, 200, 20), "Room: " + PhotonNetwork.room.name);
+			GUI.Label(new Rect(Screen.width - 400, 60, 200, 20), "My name: " + PhotonNetwork.player.name + " " + PhotonNetwork.isMasterClient);
 			for (int i = 0; i < PhotonNetwork.otherPlayers.Length; ++i)
 			{
-				GUI.Label(new Rect(Screen.width - 400, i * 30 + 50, 200, 20), PhotonNetwork.otherPlayers[i].name);
+				GUI.Label(new Rect(Screen.width - 400, i * 30 + 90, 200, 20), PhotonNetwork.otherPlayers[i].name);
 			}
 		}
 	}
