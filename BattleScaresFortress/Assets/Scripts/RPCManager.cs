@@ -43,4 +43,10 @@ public class RPCManager : MonoBehaviour
 		AllLevelsAreLoaded = allAreLoaded;
 	}
 	
+	
+	private void OnDisconnectedFromPhoton()
+	{
+		Debug.LogError("disconnected from photon");
+	}
+	
 }
