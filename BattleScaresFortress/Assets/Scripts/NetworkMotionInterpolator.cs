@@ -21,13 +21,11 @@ public class NetworkMotionInterpolator : MonoBehaviour
 	{
 		if (_photonView.isMine)
 		{
-//			_velocity = transform.position - _oldPosition;
-//			_oldPosition = transform.position;
-			_velocity = _motor.Movement.Velocity;
+//			_velocity = _motor.Movement.Velocity;
+			_velocity = rigidbody.velocity;
 		}
 		else
 		{
-//			rigidbody.velocity = _velocity;
 			transform.position += _velocity * Time.deltaTime;
 		}
 	}
@@ -37,14 +35,22 @@ public class NetworkMotionInterpolator : MonoBehaviour
 		if (stream.isWriting)
 		{
 			// we own this player; send data
+			
+//			stream.SendNext(transform.position);
+//			stream.SendNext(_velocity);
+			
 			stream.SendNext(transform.position);
 			stream.SendNext(_velocity);
 		}
 		else
 		{
 			// networked player; receive data
+			
+//			transform.position = (Vector3)stream.ReceiveNext();
+//			_velocity = (Vector3)stream.ReceiveNext();
+			
 			transform.position = (Vector3)stream.ReceiveNext();
-			_velocity = (Vector3)stream.ReceiveNext();
+			rigidbody.velocity = (Vector3)stream.ReceiveNext();
 		}
 	}
 	

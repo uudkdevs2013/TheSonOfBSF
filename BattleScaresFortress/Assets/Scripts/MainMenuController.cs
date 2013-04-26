@@ -21,11 +21,11 @@ public class MainMenuController : MonoBehaviour
 				MatchMakingController.Instance.ConnectToRemoteServers();
 			}
 			
-			GUI.Label(new Rect(w - 50, h + 35, 70, 20), "IP Address:");
-			_ipAddress = GUI.TextField(new Rect(w + 30, h + 35, 110, 20), _ipAddress, 15);
-			GUI.Label(new Rect(w - 8, h + 65, 28, 20), "Port:");
-			_port = GUI.TextField(new Rect(w + 30, h + 65, 50, 20), _port, 5);
-			if (GUI.Button(new Rect(w - 50, h + 95, 190, 30), "Connect to custom server"))
+			GUI.Label(new Rect(w - 50, h + 70, 70, 20), "IP Address:");
+			_ipAddress = GUI.TextField(new Rect(w + 30, h + 70, 110, 20), _ipAddress, 15);
+			GUI.Label(new Rect(w - 8, h + 100, 28, 20), "Port:");
+			_port = GUI.TextField(new Rect(w + 30, h + 100, 50, 20), _port, 5);
+			if (GUI.Button(new Rect(w - 50, h + 130, 190, 30), "Connect to custom server"))
 			{
 				int port;
 				if (System.Int32.TryParse(_port, out port))
