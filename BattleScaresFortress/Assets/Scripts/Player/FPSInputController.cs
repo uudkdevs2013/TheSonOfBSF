@@ -58,6 +58,7 @@ public class FPSInputController : MonoBehaviour
 		{
 			// we own this player; send data
 			
+			stream.SendNext(transform.position);
 			stream.SendNext(transform.rotation);
 			stream.SendNext(_directionVector);
 			stream.SendNext(_jumpIsPressed);
@@ -65,6 +66,7 @@ public class FPSInputController : MonoBehaviour
 		else
 		{
 			// networked player; receive data
+			transform.position = (Vector3)stream.ReceiveNext();
 			transform.rotation = (Quaternion)stream.ReceiveNext();
 			_directionVector = (Vector3)stream.ReceiveNext();
 			_jumpIsPressed = (bool)stream.ReceiveNext();
