@@ -4,6 +4,8 @@ using System.Collections.Generic;
 public class Hover : MonoBehaviour
 {
 	
+	[SerializeField] PhotonView _photonView;
+	
 	// Hover-related 
 	[SerializeField]
 	private float desiredHeight;									// The desired height the object should hover
@@ -39,18 +41,35 @@ public class Hover : MonoBehaviour
 	
 	private void FindTarget()
 	{
-		Player closestPlayer = null;
-		float closestDistance = float.MaxValue;
+		if (_photonView.isMine)
+		{
+			Player closestPlayer = null;
+			float closestDistance = float.MaxValue;
+			foreach (var player in Player.GetAllPlayers())
+			{
+				float distance = Vector3.Distance(player.transform.position, transform.position);
+				if (distance < closestDistance)
+				{
+					closestPlayer = player;
+					closestDistance = distance;
+				}
+			}
+			_photonView.RPC("rpcSetTarget", PhotonTargets.Others, closestPlayer.photonView.owner.name);
+			target = closestPlayer.gameObject;
+		}
+	}
+	
+	[RPC]
+	private void rpcSetTarget(string targetName)
+	{
 		foreach (var player in Player.GetAllPlayers())
 		{
-			float distance = Vector3.Distance(player.transform.position, transform.position);
-			if (distance < closestDistance)
+			if (player.photonView.owner.name == targetName)
 			{
-				closestPlayer = player;
-				closestDistance = distance;
+				target = player.gameObject;
+				break;
 			}
 		}
-		target = closestPlayer.gameObject;
 	}
 	
 	// Maintain desired height

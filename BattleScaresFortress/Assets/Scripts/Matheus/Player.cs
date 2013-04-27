@@ -9,6 +9,14 @@ public class Player : MonoBehaviour
 	
 	Weapon weapon;
 	
+	public PhotonView photonView
+	{
+		get
+		{
+			return _photonView;
+		}
+	}
+	
 	private void Awake()
 	{
 		if (_allPlayers == null)

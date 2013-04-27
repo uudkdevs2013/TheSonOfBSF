@@ -79,11 +79,11 @@ public class Spawner : MonoBehaviour
 	
 	private void EnableScripts(GameObject enemy)
 	{
-		var hover = enemy.GetComponent<Hover>();
-		if (hover != null)
-		{
-			hover.enabled = true;
-		}
+//		var hover = enemy.GetComponent<Hover>();
+//		if (hover != null)
+//		{
+//			hover.enabled = true;
+//		}
 	}
 	
 	private void GoToNextWave()
