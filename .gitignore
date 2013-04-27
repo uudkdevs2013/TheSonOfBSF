@@ -8,3 +8,4 @@ Temp
 *.pidb
 Build
 *.meta
+*/*.meta
