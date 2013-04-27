@@ -8,38 +8,67 @@ public class FPSInputController : MonoBehaviour
 {
 	private CharacterMotor motor;
 	
-	// Use this for initialization
+	[SerializeField] private PhotonView _photonView;
+	private Vector3 _directionVector;
+	private bool _jumpIsPressed;
+	
 	private void Awake()
 	{
 		motor = GetComponent<CharacterMotor>();
+		_directionVector = Vector3.zero;
+		_jumpIsPressed = false;
 	}
 	
-	// Update is called once per frame
 	private void Update()
 	{
-		// Get the input vector from kayboard or analog stick
-		var directionVector = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
-		
-		if (directionVector != Vector3.zero)
+		if (_photonView.isMine)
 		{
-			// Get the length of the directon vector and then normalize it
-			// Dividing by the length is cheaper than normalizing when we already have the length anyway
-			var directionLength = directionVector.magnitude;
-			directionVector = directionVector / directionLength;
+			// Get the input vector from kayboard or analog stick
+			_directionVector = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
 			
-			// Make sure the length is no bigger than 1
-			directionLength = Mathf.Min(1, directionLength);
+			if (_directionVector != Vector3.zero)
+			{
+				// Get the length of the directon vector and then normalize it
+				// Dividing by the length is cheaper than normalizing when we already have the length anyway
+				var directionLength = _directionVector.magnitude;
+				_directionVector = _directionVector / directionLength;
+				
+				// Make sure the length is no bigger than 1
+				directionLength = Mathf.Min(1, directionLength);
+				
+				// Make the input vector more sensitive towards the extremes and less sensitive in the middle
+				// This makes it easier to control slow speeds when using analog sticks
+				directionLength = directionLength * directionLength;
+				
+				// Multiply the normalized direction vector by the modified length
+				_directionVector = _directionVector * directionLength;
+			}
 			
-			// Make the input vector more sensitive towards the extremes and less sensitive in the middle
-			// This makes it easier to control slow speeds when using analog sticks
-			directionLength = directionLength * directionLength;
-			
-			// Multiply the normalized direction vector by the modified length
-			directionVector = directionVector * directionLength;
+			_jumpIsPressed = Input.GetButton("Jump");
 		}
 		
 		// Apply the direction to the CharacterMotor
-		motor.InputMoveDirection = transform.rotation * directionVector;
-		motor.InputJump = Input.GetButton("Jump");
+		motor.InputMoveDirection = transform.rotation * _directionVector;
+		motor.InputJump = _jumpIsPressed;
 	}
+	
+	private void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+	{
+		if (stream.isWriting)
+		{
+			// we own this player; send data
+			
+			stream.SendNext(transform.rotation);
+			stream.SendNext(_directionVector);
+			stream.SendNext(_jumpIsPressed);
+		}
+		else
+		{
+			// networked player; receive data
+			transform.rotation = (Quaternion)stream.ReceiveNext();
+			_directionVector = (Vector3)stream.ReceiveNext();
+			_jumpIsPressed = (bool)stream.ReceiveNext();
+		}
+	}
+	
 }
