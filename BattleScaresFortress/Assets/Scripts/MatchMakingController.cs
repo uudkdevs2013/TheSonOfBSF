@@ -33,8 +33,8 @@ public class MatchMakingController : Photon.MonoBehaviour
 	private void Start()
 	{
 //		print("send rate: " + PhotonNetwork.sendRate + "  send rate on serialize: " + PhotonNetwork.sendRateOnSerialize);
-		PhotonNetwork.sendRate = 60;
-		PhotonNetwork.sendRateOnSerialize = 60;
+		PhotonNetwork.sendRate = 40;
+		PhotonNetwork.sendRateOnSerialize = 30;
 	}
 	
 	private void OnGUI()
