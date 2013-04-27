@@ -8,6 +8,7 @@ public class MainMenuController : MonoBehaviour
 	
 	private string _ipAddress = "192.168.1.143";
 	private string _port = "5055";
+	private string _playerName = "player";
 	
 	private void OnGUI()
 	{
@@ -16,11 +17,13 @@ public class MainMenuController : MonoBehaviour
 			int w = (int)(Screen.width * 0.25f);
 			int h = (int)(Screen.height * 0.25f + 100);
 			
-			if (GUI.Button(new Rect(w - 50, h - 15, 200, 30), "Connect to remote server"))
+			// connect to Photon Cloud servers in Europe
+			if (GUI.Button(new Rect(w - 50, h - 15, 200, 30), "Connect to Photon Cloud"))
 			{
-				MatchMakingController.Instance.ConnectToRemoteServers();
+				MatchMakingController.Instance.ConnectToRemoteServers(_playerName);
 			}
 			
+			// connect to custom server
 			GUI.Label(new Rect(w - 50, h + 70, 70, 20), "IP Address:");
 			_ipAddress = GUI.TextField(new Rect(w + 30, h + 70, 110, 20), _ipAddress, 15);
 			GUI.Label(new Rect(w - 8, h + 100, 28, 20), "Port:");
@@ -30,9 +33,13 @@ public class MainMenuController : MonoBehaviour
 				int port;
 				if (System.Int32.TryParse(_port, out port))
 				{
-					MatchMakingController.Instance.ConnectToCustomServer(_ipAddress, port);
+					MatchMakingController.Instance.ConnectToCustomServer(_ipAddress, port, _playerName);
 				}
 			}
+			
+			// player name
+			GUI.Label(new Rect(w + 300, h - 15, 80, 20), "Player Name:");
+			_playerName = GUI.TextField(new Rect(w + 390, h - 15, 100, 30), _playerName, 15);
 		}
 		else if (MatchMakingController.Instance.CurrentStatus == MatchMakingStatus.InLobby)
 		{
@@ -80,7 +87,7 @@ public class MainMenuController : MonoBehaviour
 			
 			// show the other players
 			GUI.Label(new Rect(Screen.width - 400, 20, 200, 20), "Room: " + PhotonNetwork.room.name);
-			GUI.Label(new Rect(Screen.width - 400, 60, 200, 20), "My name: " + PhotonNetwork.player.name + " " + PhotonNetwork.isMasterClient);
+			GUI.Label(new Rect(Screen.width - 400, 60, 200, 20), PhotonNetwork.player.name);
 			for (int i = 0; i < PhotonNetwork.otherPlayers.Length; ++i)
 			{
 				GUI.Label(new Rect(Screen.width - 400, i * 30 + 90, 200, 20), PhotonNetwork.otherPlayers[i].name);
