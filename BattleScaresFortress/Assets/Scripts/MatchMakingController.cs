@@ -30,6 +30,13 @@ public class MatchMakingController : Photon.MonoBehaviour
 		_currentStatus = MatchMakingStatus.NotConnected;
 	}
 	
+	private void Start()
+	{
+//		print("send rate: " + PhotonNetwork.sendRate + "  send rate on serialize: " + PhotonNetwork.sendRateOnSerialize);
+		PhotonNetwork.sendRate = 60;
+		PhotonNetwork.sendRateOnSerialize = 60;
+	}
+	
 	private void OnGUI()
 	{
 		GUI.Label(new Rect(10, Screen.height - 45, 1000, 20), "Photon Status: " + PhotonNetwork.connectionState.ToString());
