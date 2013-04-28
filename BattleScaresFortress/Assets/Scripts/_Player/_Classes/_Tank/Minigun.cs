@@ -7,14 +7,27 @@ public class Minigun : NetworkedComponent
 	[SerializeField] private float _range = 50;
 	[SerializeField] private float _damage = 3;
 	[SerializeField] private float _inaccuracy = 0.25f;
-	[SerializeField] private float _fireInterval = 0.3f;
+	[SerializeField] private float _fireSpeedSlow = 0.7f;
+	[SerializeField] private float _fireSpeedFast = 0.1f;
+	[SerializeField] private float _fireSpeedRate = 0.3f;
+	[SerializeField] private int _maxAmmo = 350;
+	
+	[SerializeField] private AudioClip _fireSound;
+	[SerializeField] private AudioClip _emptySound;
+	[SerializeField] private GUISkin _guiSkin;
 	
 	[SerializeField] private Transform _firePoint;
-	[SerializeField] private AudioSource _fireSound;
 	[SerializeField] private GameObject _trail;
 	
+	private int _ammo;
+	private float _fireSpeed;
 	private float _fireCounter;
 	private LinkedList<Vector3> _fireTargets = new LinkedList<Vector3>();
+	
+	void Start()
+	{
+		_ammo = _maxAmmo;
+	}
 	
 	public void UpdateFiring(float delta, bool fire)
 	{
@@ -23,28 +36,42 @@ public class Minigun : NetworkedComponent
 			if(_fireCounter <= 0.0f)
 			{
 				Fire();
-				_fireCounter += _fireInterval;
+				_fireCounter += 1f;
 			}
 		}
-		_fireCounter -= delta;
+		_fireCounter -= (delta / _fireSpeed);
 		if(_fireCounter < 0.0f)
 			_fireCounter = 0.0f;
+		
+		if(fire)
+			_fireSpeed -= _fireSpeedRate * delta;
+		else
+			_fireSpeed += _fireSpeedRate * delta;
+		_fireSpeed = Mathf.Clamp(_fireSpeed, _fireSpeedFast, _fireSpeedSlow);
 	}
 	
 	public void Fire()
 	{
-		Vector3 direction = GetInaccuracy(_firePoint, _inaccuracy);
-		Vector3 hit = _firePoint.position + (_range * direction);
-		RaycastHit rH;
-		if(Physics.Raycast(new Ray(_firePoint.position, direction), out rH, _range))
+		if(_ammo > 0)
 		{
-			// Handle damage
-			
-			hit = rH.point;
+			Vector3 direction = GetInaccuracy(_firePoint, _inaccuracy);
+			Vector3 hit = _firePoint.position + (_range * direction);
+			RaycastHit rH;
+			if(Physics.Raycast(new Ray(_firePoint.position, direction), out rH, _range))
+			{
+				// Handle damage
+				
+				hit = rH.point;
+			}
+			FireEffect(_firePoint, hit);
+			_fireTargets.AddLast(hit);
+			audio.PlayOneShot(_fireSound);
+			_ammo--;
 		}
-		FireEffect(_firePoint, hit);
-		_fireTargets.AddLast(hit);
-		_fireSound.Play();
+		else
+		{
+			audio.PlayOneShot(_emptySound);
+		}
 	}
 	
 	private Vector3 GetInaccuracy(Transform source, float amount)
@@ -63,6 +90,14 @@ public class Minigun : NetworkedComponent
 		{
 			trail.Position(source.position, target);
 		}
+	}
+	
+	void OnGUI()
+	{
+		GUI.skin = _guiSkin;
+		int w = Screen.width;
+		int h = Screen.height;
+		GUI.Label(new Rect(w * 0.75f, h * 0.85f, w * 0.25f, h * 0.15f), "" + _ammo);
 	}
 	
 	public override bool NeedsSend()
@@ -88,7 +123,7 @@ public class Minigun : NetworkedComponent
 		{
 			Vector3 target = (Vector3) stream.ReceiveNext();
 			FireEffect(_firePoint, target);
-			_fireSound.Play();
+			audio.PlayOneShot(_fireSound);
 		}
 	}
 }

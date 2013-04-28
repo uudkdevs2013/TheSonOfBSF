@@ -41,6 +41,11 @@ public class Sniper : PlayerController
 			{
 				_rifles.Fire();
 			}
+			
+			if(Input.GetKeyDown(KeyCode.R))
+			{
+				_rifles.Reload();
+			}
 		}
 	}
 }
