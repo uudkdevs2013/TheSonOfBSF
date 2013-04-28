@@ -36,7 +36,7 @@ public class Player : MonoBehaviour
 		{
 			if (Input.GetMouseButtonDown(0))
 			{
-				if (weapon.GetComponent<Weapon>().Fire()) {
+				if (_weapon.GetComponent<Weapon>().Fire()) {
 					RaycastHit hit;
 					Ray ray = _camera.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2, 0));
 					if (Physics.Raycast(ray.origin, ray.direction, out hit, Mathf.Infinity))
