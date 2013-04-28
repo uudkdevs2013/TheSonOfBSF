@@ -29,6 +29,7 @@ public class PlayerController : MonoBehaviour
 	private bool _jump;
 	private float _minAimY = -60;
 	private float _maxAimY = 60;
+	protected float _health = 50;
 	
 	protected Vector2 _aim = new Vector2(0, 0);
 	protected Vector2 _aimSensitivity = new Vector2(15, 15);
@@ -40,6 +41,18 @@ public class PlayerController : MonoBehaviour
 			_allPlayers = new LinkedList<PlayerController>();
 		}
 		_allPlayers.AddLast(this);
+	}
+	
+	protected virtual void OnDestroy()
+	{
+		if (_allPlayers != null)
+		{
+			_allPlayers.Remove(this);
+		}
+		if (_photonView.isMine)
+		{
+			LevelLoader.RespawnPlayer();
+		}
 	}
 	
 	protected virtual void Start()
@@ -154,8 +167,31 @@ public class PlayerController : MonoBehaviour
 		}
 	}
 	
+	public void ApplyDamage(float amountOfDamage)
+	{
+		_photonView.RPC("rpcApplyDamage", PhotonTargets.All, amountOfDamage);
+	}
 	
-	protected static LinkedList<PlayerController> _allPlayers;
+	[RPC]
+	private void rpcApplyDamage(float amountOfDamage)
+	{
+		_health -= amountOfDamage;
+		if (_health < 0)
+		{
+			Die();
+		}
+	}
+	
+	private void Die()
+	{
+		if (_photonView.isMine)
+		{
+			PhotonNetwork.Destroy(gameObject);
+		}
+	}
+	
+	
+	protected static LinkedList<PlayerController> _allPlayers = new LinkedList<PlayerController>();
 	
 	public static IEnumerable<PlayerController> GetAllPlayers()
 	{

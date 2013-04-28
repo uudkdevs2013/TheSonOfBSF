@@ -3,6 +3,19 @@ using System.Collections;
 
 public class LevelLoader : MonoBehaviour
 {
+	
+	[SerializeField] private Camera _loaderCamera;
+	[SerializeField] private GUITexture _crossHairs;
+	
+	public static LevelLoader Instance { get; private set; }
+	private bool _isRespawningPlayer = false;
+	private float _timeUntilRespawn = 10f;
+	
+	private void Awake()
+	{
+		Instance = this;
+	}
+	
 	private void Start()
 	{
 		PhotonNetwork.isMessageQueueRunning = true;
@@ -17,49 +30,66 @@ public class LevelLoader : MonoBehaviour
 			yield return null;
 		}
 		
-		if (PhotonNetwork.isMasterClient)
-		{
-			SpawnSniper(new Vector3(1006, 50, 1042));
-		}
-		else
-		{
-			SpawnSniper(new Vector3(1010, 50, 1050));
-		}
+		RespawnPlayer();
 		
-//		GameObject localPlayer;
 //		if (PhotonNetwork.isMasterClient)
 //		{
-//			print("level loader master client");
-//			localPlayer = PhotonNetwork.Instantiate("FirstPersonController", new Vector3(1006, 50, 1042), Quaternion.Euler(0, 0, 0), 0);
+//			SpawnSniper(new Vector3(1006, 50, 1042));
 //		}
 //		else
 //		{
-//			print("level loader not master client");
-//			localPlayer = PhotonNetwork.Instantiate("FirstPersonController", new Vector3(1010, 50, 1050), Quaternion.Euler(0, 0, 0), 0);
+//			SpawnSniper(new Vector3(1010, 50, 1050));
 //		}
-		
-//		if (PhotonNetwork.isMasterClient)
-//		{
-//			yield return new WaitForSeconds(5);
-//			var drone = PhotonNetwork.Instantiate("Drone", new Vector3(800, 100, 800), Quaternion.Euler(0, 0, 0), 0);
-//			drone.GetComponent<Hover>().enabled = true;
-//			var crawler = PhotonNetwork.Instantiate("Crawler", new Vector3(1017, 30, 1054), Quaternion.Euler(0, 0, 0), 0);
-//			var groundEnemy = PhotonNetwork.Instantiate("GroundEnemy", new Vector3(1022, 30, 1054), Quaternion.Euler(0, 0, 0), 0);
-//		}
+	}
+	
+	private void Update()
+	{
+		if (_isRespawningPlayer)
+		{
+			_timeUntilRespawn -= Time.deltaTime;
+		}
 	}
 	
 	private GameObject SpawnSniper(Vector3 position)
 	{
 		return PhotonNetwork.Instantiate("Players/Sniper", position, Quaternion.Euler(0, 0, 0), 0);
-//		localPlayer.GetComponent<CharacterController>().enabled = true;
-//		localPlayer.GetComponent<MouseLook>().enabled = true;
-//		localPlayer.GetComponent<FPSInputController>().enabled = true;
-//		localPlayer.GetComponent<CharacterMotor>().enabled = true;
-//		localPlayer.GetComponentInChildren<Camera>().enabled = true;
-//		
-//		var cameraChild = localPlayer.transform.FindChild("Main Camera");
-//		cameraChild.GetComponent<MouseLook>().enabled = true;
-//		cameraChild.GetComponent<AudioListener>().enabled = true;
+	}
+	
+	public static void RespawnPlayer()
+	{
+		Instance.RespawnLocalPlayer();
+	}
+	
+	private void RespawnLocalPlayer()
+	{
+		print("respawning player");
+		_isRespawningPlayer = true;
+		_loaderCamera.enabled = true;
+		_crossHairs.enabled = false;
+		_timeUntilRespawn = 5f;
+	}
+	
+	private void OnGUI()
+	{
+		if (_isRespawningPlayer)
+		{
+			if (_timeUntilRespawn > 0)
+			{
+				int timeLeft = (int)_timeUntilRespawn;
+				GUI.Label(new Rect(50, 50, 200, 20), "Time until respawn: " + timeLeft);
+			}
+			else
+			{
+				GUI.Label(new Rect(50, 50, 200, 20), "Select Your Class:");
+				if (GUI.Button(new Rect(100, 100, 200, 30), "Sniper"))
+				{
+					_isRespawningPlayer = false;
+					_loaderCamera.enabled = false;
+					_crossHairs.enabled = true;
+					SpawnSniper(new Vector3(1006, 50, 1042));
+				}
+			}
+		}
 	}
 	
 }

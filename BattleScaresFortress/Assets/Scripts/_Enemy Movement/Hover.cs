@@ -54,8 +54,11 @@ public class Hover : MonoBehaviour
 					closestDistance = distance;
 				}
 			}
-			_photonView.RPC("rpcSetTarget", PhotonTargets.Others, closestPlayer.photonView.owner.name);
-			target = closestPlayer.gameObject;
+			if (closestPlayer != null)
+			{
+				_photonView.RPC("rpcSetTarget", PhotonTargets.Others, closestPlayer.photonView.owner.name);
+				target = closestPlayer.gameObject;
+			}
 		}
 	}
 	
