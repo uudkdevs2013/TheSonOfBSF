@@ -50,7 +50,7 @@ public class LevelLoader : MonoBehaviour
 	
 	private GameObject SpawnSniper(Vector3 position)
 	{
-		return PhotonNetwork.Instantiate("Sniper", position, Quaternion.Euler(0, 0, 0), 0);
+		return PhotonNetwork.Instantiate("Players/Sniper", position, Quaternion.Euler(0, 0, 0), 0);
 //		localPlayer.GetComponent<CharacterController>().enabled = true;
 //		localPlayer.GetComponent<MouseLook>().enabled = true;
 //		localPlayer.GetComponent<FPSInputController>().enabled = true;

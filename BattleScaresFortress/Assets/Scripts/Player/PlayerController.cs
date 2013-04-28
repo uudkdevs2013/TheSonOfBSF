@@ -97,7 +97,7 @@ public class PlayerController : MonoBehaviour
 		_motor.InputJump = _jump;
 	}
 	
-	private void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+	protected void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
 	{
 		if (stream.isWriting)
 		{

@@ -55,7 +55,7 @@ public class SniperRifles : NetworkedComponent
 		stream.SendNext(numTargets);
 		for(int i = 0; i < numTargets; i++)
 		{
-			stream.SendNext(_fireTargets.First);
+			stream.SendNext(_fireTargets.First.Value);
 			_fireTargets.RemoveFirst();
 		}
 	}
