@@ -25,7 +25,7 @@ public class PlayerController : MonoBehaviour
 	protected Vector2 _aim = new Vector2(0, 0);
 	protected Vector2 _aimSensitivity = new Vector2(15, 15);
 	
-	public void Start()
+	public virtual void Start()
 	{
 		_aim.x = transform.localEulerAngles.y;
 		_aim.y = -_direction.localEulerAngles.x;
@@ -44,7 +44,7 @@ public class PlayerController : MonoBehaviour
 		}
 	}
 	
-	public void Update()
+	public virtual void Update()
 	{
 		if(IsLocal)
 		{

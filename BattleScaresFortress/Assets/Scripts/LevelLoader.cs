@@ -17,26 +17,26 @@ public class LevelLoader : MonoBehaviour
 			yield return null;
 		}
 		
-		GameObject localPlayer;
 		if (PhotonNetwork.isMasterClient)
 		{
-			print("level loader master client");
-			localPlayer = PhotonNetwork.Instantiate("FirstPersonController", new Vector3(1006, 50, 1042), Quaternion.Euler(0, 0, 0), 0);
+			SpawnSniper(new Vector3(1006, 50, 1042));
 		}
 		else
 		{
-			print("level loader not master client");
-			localPlayer = PhotonNetwork.Instantiate("FirstPersonController", new Vector3(1010, 50, 1050), Quaternion.Euler(0, 0, 0), 0);
+			SpawnSniper(new Vector3(1010, 50, 1050));
 		}
-		localPlayer.GetComponent<CharacterController>().enabled = true;
-		localPlayer.GetComponent<MouseLook>().enabled = true;
-		localPlayer.GetComponent<FPSInputController>().enabled = true;
-		localPlayer.GetComponent<CharacterMotor>().enabled = true;
-		localPlayer.GetComponentInChildren<Camera>().enabled = true;
 		
-		var cameraChild = localPlayer.transform.FindChild("Main Camera");
-		cameraChild.GetComponent<MouseLook>().enabled = true;
-		cameraChild.GetComponent<AudioListener>().enabled = true;
+//		GameObject localPlayer;
+//		if (PhotonNetwork.isMasterClient)
+//		{
+//			print("level loader master client");
+//			localPlayer = PhotonNetwork.Instantiate("FirstPersonController", new Vector3(1006, 50, 1042), Quaternion.Euler(0, 0, 0), 0);
+//		}
+//		else
+//		{
+//			print("level loader not master client");
+//			localPlayer = PhotonNetwork.Instantiate("FirstPersonController", new Vector3(1010, 50, 1050), Quaternion.Euler(0, 0, 0), 0);
+//		}
 		
 //		if (PhotonNetwork.isMasterClient)
 //		{
@@ -47,4 +47,19 @@ public class LevelLoader : MonoBehaviour
 //			var groundEnemy = PhotonNetwork.Instantiate("GroundEnemy", new Vector3(1022, 30, 1054), Quaternion.Euler(0, 0, 0), 0);
 //		}
 	}
+	
+	private GameObject SpawnSniper(Vector3 position)
+	{
+		return PhotonNetwork.Instantiate("Sniper", position, Quaternion.Euler(0, 0, 0), 0);
+//		localPlayer.GetComponent<CharacterController>().enabled = true;
+//		localPlayer.GetComponent<MouseLook>().enabled = true;
+//		localPlayer.GetComponent<FPSInputController>().enabled = true;
+//		localPlayer.GetComponent<CharacterMotor>().enabled = true;
+//		localPlayer.GetComponentInChildren<Camera>().enabled = true;
+//		
+//		var cameraChild = localPlayer.transform.FindChild("Main Camera");
+//		cameraChild.GetComponent<MouseLook>().enabled = true;
+//		cameraChild.GetComponent<AudioListener>().enabled = true;
+	}
+	
 }

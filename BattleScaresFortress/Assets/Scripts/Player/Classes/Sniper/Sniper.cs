@@ -13,14 +13,14 @@ public class Sniper : PlayerController
 	
 	[SerializeField] private SniperRifles _rifles;
 	
-	public void Start()
+	public override void Start()
 	{
 		base.Start();
 		_baseFoV = _camera.fov;
 		_baseSensitivity = _aimSensitivity;
 	}
 	
-	public void Update()
+	public override void Update()
 	{
 		base.Update();
 		
