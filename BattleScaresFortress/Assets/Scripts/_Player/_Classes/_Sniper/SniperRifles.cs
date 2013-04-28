@@ -20,9 +20,11 @@ public class SniperRifles : NetworkedComponent
 			if(Physics.Raycast(new Ray(source.position, source.forward), out rH, _range))
 			{
 				// Handle damage
-				print("raycast hit");
 				var enemy = rH.collider.gameObject.GetComponent<Enemy>();
-				print("enemy: " + enemy);
+				if (enemy == null && rH.collider.transform.parent != null)
+				{
+					enemy = rH.collider.transform.parent.GetComponent<Enemy>();
+				}
 				if (enemy != null)
 				{
 					enemy.ApplyDamage(_damage);
