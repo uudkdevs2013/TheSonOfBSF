@@ -6,8 +6,7 @@ public class Player : MonoBehaviour
 	
 	[SerializeField] private PhotonView _photonView;
 	[SerializeField] private Camera _camera;
-	
-	Weapon weapon;
+	[SerializeField] GameObject _weapon;
 	
 	public PhotonView photonView
 	{
@@ -37,19 +36,21 @@ public class Player : MonoBehaviour
 		{
 			if (Input.GetMouseButtonDown(0))
 			{
-				RaycastHit hit;
-				Ray ray = _camera.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2, 0));
-				if (Physics.Raycast(ray.origin, ray.direction, out hit, Mathf.Infinity))
-				{
-					print("raycast hit: " + hit.collider.name);
-					var enemy = hit.collider.gameObject.GetComponent<Enemy>();
-					if (enemy == null && hit.transform.parent != null)
+				if (weapon.GetComponent<Weapon>().Fire()) {
+					RaycastHit hit;
+					Ray ray = _camera.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2, 0));
+					if (Physics.Raycast(ray.origin, ray.direction, out hit, Mathf.Infinity))
 					{
-						enemy = hit.transform.parent.GetComponent<Enemy>();
-					}
-					if (enemy != null)
-					{
-						enemy.ApplyDamage(3);
+						print("raycast hit: " + hit.collider.name);
+						var enemy = hit.collider.gameObject.GetComponent<Enemy>();
+						if (enemy == null && hit.transform.parent != null)
+						{
+							enemy = hit.transform.parent.GetComponent<Enemy>();
+						}
+						if (enemy != null)
+						{
+							enemy.ApplyDamage(3);
+						}
 					}
 				}
 			}
