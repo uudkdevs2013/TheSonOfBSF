@@ -55,6 +55,21 @@ public class LevelLoader : MonoBehaviour
 		return PhotonNetwork.Instantiate("Players/Sniper", position, Quaternion.Euler(0, 0, 0), 0);
 	}
 	
+	private GameObject SpawnTank(Vector3 position)
+	{
+		return PhotonNetwork.Instantiate("Players/Tank", position, Quaternion.Euler(0, 0, 0), 0);
+	}
+	
+	private GameObject SpawnGrenadier(Vector3 position)
+	{
+		return PhotonNetwork.Instantiate("Players/Grenadier", position, Quaternion.Euler(0, 0, 0), 0);
+	}
+	
+	private GameObject SpawnMedic(Vector3 position)
+	{
+		return PhotonNetwork.Instantiate("Players/Medic", position, Quaternion.Euler(0, 0, 0), 0);
+	}
+	
 	public static void RespawnPlayer()
 	{
 		Instance.RespawnLocalPlayer();
@@ -87,6 +102,20 @@ public class LevelLoader : MonoBehaviour
 					_loaderCamera.enabled = false;
 					_crossHairs.enabled = true;
 					SpawnSniper(new Vector3(1006, 50, 1042));
+				}
+				if (GUI.Button(new Rect(100, 140, 200, 30), "Tank"))
+				{
+					_isRespawningPlayer = false;
+					_loaderCamera.enabled = false;
+					_crossHairs.enabled = true;
+					SpawnTank(new Vector3(1006, 50, 1042));
+				}
+				if (GUI.Button(new Rect(100, 180, 200, 30), "Grenadier"))
+				{
+					_isRespawningPlayer = false;
+					_loaderCamera.enabled = false;
+					_crossHairs.enabled = true;
+					SpawnGrenadier(new Vector3(1006, 50, 1042));
 				}
 			}
 		}
