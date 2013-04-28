@@ -11,6 +11,8 @@ public class Sniper : PlayerController
 	[SerializeField] private Vector2 _focusSensitivity;
 	private Vector2 _baseSensitivity;
 	
+	[SerializeField] private SniperRifles _rifles;
+	
 	public void Start()
 	{
 		base.Start();
@@ -33,6 +35,11 @@ public class Sniper : PlayerController
 			{
 				_camera.fov = _baseFoV;
 				_aimSensitivity = _baseSensitivity;
+			}
+			
+			if(Input.GetMouseButtonDown(0))
+			{
+				_rifles.Fire();
 			}
 		}
 	}

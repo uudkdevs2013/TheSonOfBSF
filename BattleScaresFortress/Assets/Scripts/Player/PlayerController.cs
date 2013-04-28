@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour
 	[SerializeField] private Transform _leftGun;
 	[SerializeField] private Transform _rightGun;
 	[SerializeField] private Transform _direction;
+	[SerializeField] private NetworkedComponent[] _components;
 	
 	[SerializeField] private GameObject[] _disableIfLocal;
 	[SerializeField] private GameObject[] _disableIfNetworked;
@@ -45,7 +46,7 @@ public class PlayerController : MonoBehaviour
 	
 	public void Update()
 	{
-		if(_photonView == null || _photonView.isMine)
+		if(IsLocal)
 		{
 			UpdateControls();
 		}
@@ -94,5 +95,45 @@ public class PlayerController : MonoBehaviour
 	{
 		_motor.InputMoveDirection = transform.rotation * _movement;
 		_motor.InputJump = _jump;
+	}
+	
+	private void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+	{
+		if (stream.isWriting)
+		{
+			// we own this player; send data
+			stream.SendNext(transform.position);
+			stream.SendNext(_aim);
+			stream.SendNext(_movement);
+			stream.SendNext(_jump);
+			foreach(NetworkedComponent component in _components)
+			{
+				if(component.NeedsSend())
+				{
+					stream.SendNext(true);
+					component.SendData(stream, info);
+				}
+				else
+				{
+					stream.SendNext(false);
+				}
+			}
+		}
+		else
+		{
+			// networked player; receive data
+			transform.position = (Vector3)stream.ReceiveNext();
+			_aim = (Vector2)stream.ReceiveNext();
+			_movement = (Vector3)stream.ReceiveNext();
+			_jump = (bool)stream.ReceiveNext();
+			
+			foreach(NetworkedComponent component in _components)
+			{
+				if((bool) stream.ReceiveNext())
+				{
+					component.ReadData(stream, info);
+				}
+			}
+		}
 	}
 }
