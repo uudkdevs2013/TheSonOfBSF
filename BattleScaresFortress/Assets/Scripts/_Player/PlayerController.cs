@@ -1,11 +1,19 @@
 using UnityEngine;
-using System.Collections;
+using System.Collections.Generic;
 
 public class PlayerController : MonoBehaviour
 {
 	private CharacterMotor _motor;
 	
 	[SerializeField] private PhotonView _photonView;
+	public PhotonView photonView
+	{
+		get
+		{
+			return _photonView;
+		}
+	}
+	
 	[SerializeField] private Transform _leftGun;
 	[SerializeField] private Transform _rightGun;
 	[SerializeField] private Transform _direction;
@@ -25,7 +33,16 @@ public class PlayerController : MonoBehaviour
 	protected Vector2 _aim = new Vector2(0, 0);
 	protected Vector2 _aimSensitivity = new Vector2(15, 15);
 	
-	public virtual void Start()
+	protected virtual void Awake()
+	{
+		if (_allPlayers == null)
+		{
+			_allPlayers = new LinkedList<PlayerController>();
+		}
+		_allPlayers.AddLast(this);
+	}
+	
+	protected virtual void Start()
 	{
 		_aim.x = transform.localEulerAngles.y;
 		_aim.y = -_direction.localEulerAngles.x;
@@ -44,7 +61,7 @@ public class PlayerController : MonoBehaviour
 		}
 	}
 	
-	public virtual void Update()
+	protected virtual void Update()
 	{
 		if(IsLocal)
 		{
@@ -136,4 +153,13 @@ public class PlayerController : MonoBehaviour
 			}
 		}
 	}
+	
+	
+	protected static LinkedList<PlayerController> _allPlayers;
+	
+	public static IEnumerable<PlayerController> GetAllPlayers()
+	{
+		return (IEnumerable<PlayerController>)_allPlayers;
+	}
+	
 }

@@ -43,9 +43,9 @@ public class Hover : MonoBehaviour
 	{
 		if (_photonView.isMine)
 		{
-			Player closestPlayer = null;
+			PlayerController closestPlayer = null;
 			float closestDistance = float.MaxValue;
-			foreach (var player in Player.GetAllPlayers())
+			foreach (var player in PlayerController.GetAllPlayers())
 			{
 				float distance = Vector3.Distance(player.transform.position, transform.position);
 				if (distance < closestDistance)
@@ -62,7 +62,7 @@ public class Hover : MonoBehaviour
 	[RPC]
 	private void rpcSetTarget(string targetName)
 	{
-		foreach (var player in Player.GetAllPlayers())
+		foreach (var player in PlayerController.GetAllPlayers())
 		{
 			if (player.photonView.owner.name == targetName)
 			{

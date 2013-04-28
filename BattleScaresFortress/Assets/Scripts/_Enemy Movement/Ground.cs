@@ -34,9 +34,9 @@ public class Ground : MonoBehaviour {
 	
 	private void FindTarget()
 	{
-		Player closestPlayer = null;
+		PlayerController closestPlayer = null;
 		float closestDistance = float.MaxValue;
-		foreach (var player in Player.GetAllPlayers())
+		foreach (var player in PlayerController.GetAllPlayers())
 		{
 			float distance = Vector3.Distance(player.transform.position, transform.position);
 			if (distance < closestDistance)
