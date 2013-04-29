@@ -92,6 +92,8 @@ public class Shotgun : NetworkedComponent
 			if(_ammoInClip == 0 && _ammo > 0)
 				Reload();
 		}
+		if(_ammoInClip == 0 && _ammo > 0)
+			Reload();
 	}
 	
 	private Vector3 GetInaccuracy(Transform source, float amount)
