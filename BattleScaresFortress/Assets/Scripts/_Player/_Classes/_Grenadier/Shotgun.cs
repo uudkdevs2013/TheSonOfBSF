@@ -24,7 +24,7 @@ public class Shotgun : NetworkedComponent
 	
 	[SerializeField] private Transform _firePoint;
 	[SerializeField] private GameObject _trail;
-	private int _numShotsFired;
+	private bool _shotFired;
 	
 	void Start()
 	{
@@ -81,7 +81,7 @@ public class Shotgun : NetworkedComponent
 			}
 			
 			FireEffect(_firePoint);
-			_numShotsFired++;
+			_shotFired = true;
 			audio.PlayOneShot(_fireSound);
 			_cooldown = _shotCooldown;
 			_ammoInClip--;
@@ -129,18 +129,18 @@ public class Shotgun : NetworkedComponent
 	
 	public override bool NeedsSend()
 	{
-		return _numShotsFired > 0;
+		return _shotFired;
 	}
 	
 	public override void SendData(PhotonStream stream, PhotonMessageInfo info)
 	{
-		stream.SendNext(_numShotsFired);
+		stream.SendNext(_shotFired);
+		_shotFired = false;
 	}
 	
 	public override void ReadData(PhotonStream stream, PhotonMessageInfo info)
 	{
-		int numTargets = (int) stream.ReceiveNext();
-		for(int i = 0; i < numTargets; i++)
+		if((bool) stream.ReceiveNext())
 		{
 			FireEffect(_firePoint);
 			audio.PlayOneShot(_fireSound);
