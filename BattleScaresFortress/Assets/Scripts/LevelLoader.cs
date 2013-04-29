@@ -4,7 +4,7 @@ using System.Collections;
 public class LevelLoader : MonoBehaviour
 {
 	
-	[SerializeField] private Camera _loaderCamera;
+//	[SerializeField] private Camera _loaderCamera;
 	[SerializeField] private GUITexture _crossHairs;
 	
 	public static LevelLoader Instance { get; private set; }
@@ -77,11 +77,12 @@ public class LevelLoader : MonoBehaviour
 	
 	private void RespawnLocalPlayer()
 	{
-		print("respawning player");
-		_isRespawningPlayer = true;
-		_loaderCamera.enabled = true;
-		_crossHairs.enabled = false;
-		_timeUntilRespawn = 5f;
+		SpawnSniper(new Vector3(1006, 50, 1042));
+//		print("respawning player");
+//		_isRespawningPlayer = true;
+////		_loaderCamera.enabled = true;
+//		_crossHairs.enabled = false;
+//		_timeUntilRespawn = 5f;
 	}
 	
 	private void OnGUI()
@@ -99,21 +100,21 @@ public class LevelLoader : MonoBehaviour
 				if (GUI.Button(new Rect(100, 100, 200, 30), "Sniper"))
 				{
 					_isRespawningPlayer = false;
-					_loaderCamera.enabled = false;
+//					_loaderCamera.enabled = false;
 					_crossHairs.enabled = true;
 					SpawnSniper(new Vector3(1006, 50, 1042));
 				}
 				if (GUI.Button(new Rect(100, 140, 200, 30), "Tank"))
 				{
 					_isRespawningPlayer = false;
-					_loaderCamera.enabled = false;
+//					_loaderCamera.enabled = false;
 					_crossHairs.enabled = true;
 					SpawnTank(new Vector3(1006, 50, 1042));
 				}
 				if (GUI.Button(new Rect(100, 180, 200, 30), "Grenadier"))
 				{
 					_isRespawningPlayer = false;
-					_loaderCamera.enabled = false;
+//					_loaderCamera.enabled = false;
 					_crossHairs.enabled = true;
 					SpawnGrenadier(new Vector3(1006, 50, 1042));
 				}
