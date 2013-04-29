@@ -70,6 +70,15 @@ public class Drone : MonoBehaviour
 				TryFire();
 			}
 		}
+		else
+		{
+			if (target != null)
+			{
+				MaintainHeight();
+				Strafe();
+				FollowPlayer();
+			}
+		}
 	}
 	
 	private void FindTarget()
@@ -134,7 +143,8 @@ public class Drone : MonoBehaviour
 		if (strafeRight)
 		{
 			strafeDirection = transform.right;
-		} else
+		}
+		else
 		{
 			strafeDirection = - transform.right;
 		}
@@ -174,11 +184,18 @@ public class Drone : MonoBehaviour
 			{
 				ChangeDirection();
 			}
-			yield return new WaitForSeconds(strafeFrequency);
+			float randomWait = Random.value - 0.5f;
+			yield return new WaitForSeconds(strafeFrequency + randomWait);
 		}
 	}
 	
 	private void ChangeDirection()
+	{
+		_photonView.RPC("rpcChangeDirection", PhotonTargets.All);
+	}
+	
+	[RPC]
+	private void rpcChangeDirection()
 	{
 		strafeRight = !strafeRight;
 	}
