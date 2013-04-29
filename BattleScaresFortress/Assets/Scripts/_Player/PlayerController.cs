@@ -53,7 +53,7 @@ public class PlayerController : MonoBehaviour
 		}
 		if (_photonView.isMine)
 		{
-			LevelLoader.RespawnPlayer();
+			LevelLoader.ShowSpectatorCameras();
 		}
 	}
 	
