@@ -65,6 +65,11 @@ public class Crawler : MonoBehaviour
 				TryFire();
 			}
 		}
+		
+		if (_photonView.isMine && transform.position.y < -100)
+		{
+			PhotonNetwork.Destroy(gameObject);
+		}
 	}
 	
 	private void FindTarget()
