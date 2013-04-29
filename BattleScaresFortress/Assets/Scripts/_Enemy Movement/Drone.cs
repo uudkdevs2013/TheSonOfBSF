@@ -5,49 +5,40 @@ using System.Collections;
 public class Drone : MonoBehaviour
 {
 	
-	[SerializeField]
-	PhotonView _photonView;
+	[SerializeField] PhotonView _photonView;
 	
 	// Hover-related 
-	[SerializeField]
-	private float desiredHeight;									// The desired height the object should hover
-	private float hoverHeight;										// The current hover height
-	[SerializeField]
-	private float hoverVelocity;									// The hover velocity 
+	[SerializeField] private float _desiredHeight;					// The desired height the object should hover
+	[SerializeField] private float _hoverVelocity;					// The hover velocity 
+	private float _hoverHeight;										// The current hover height
 	
 	// Player following-related
-	[SerializeField]
-	private float maxVelocity;										// Max following velocity
-	[SerializeField]
-	private float minDistance;										// Minimun distance to keep from player
-	private float distanceToPlayer;									// Current distance to player
-	private float velocity;											// Current following velocity
+	[SerializeField] private float _maxVelocity;					// Max following velocity
+	[SerializeField] private float _minDistance;					// Minimun distance to keep from player
+	private float _distanceToPlayer;								// Current distance to player
+	private float _velocity;										// Current following velocity
 	
-	[SerializeField]
-	private float firingDistance;
-	private float fireCounter;
+	[SerializeField] private float _firingDistance;					// Minimum distance to fire
+	private float _fireTimer;										// Timer used to firing rate
 	
 	// Strafe
-	[SerializeField]
-	private float strafeSpeed = 5.0f;
-	[SerializeField]
-	private float strafeFrequency = 3.0f;
-	Vector3 strafeDirection;
-	private bool strafeRight = false;
-	[SerializeField]
-	private DroneGun _gun;
+	[SerializeField] private float _strafeSpeed = 5.0f;				// Sideways speed
+	[SerializeField] private float _strafeFrequency = 3.0f;			// How often the strafe randomly changes
+	private Vector3 _strafeDirection;								// The current strafe direction
+	private bool _strafeRight = false;								// It is strafing right (false is left)
 	
-	
+	// The Drone's gun
+	[SerializeField] private DroneGun _gun;
+		
 	// Target
-	[SerializeField]
-	private GameObject target = null;
+	[SerializeField] private GameObject _target = null;
 	
 	private void Start()
 	{
 		if (_photonView.isMine)
 		{
 			StartCoroutine(GetNewStrafe());
-			firingDistance = _gun.Range;
+			_firingDistance = _gun.Range;
 			StartCoroutine(FindNewTarget());
 		}
 	}
@@ -58,7 +49,7 @@ public class Drone : MonoBehaviour
 	{
 		if (_photonView.isMine)
 		{
-			if (target == null)
+			if (_target == null)
 			{
 				FindTarget();
 			}
@@ -72,7 +63,7 @@ public class Drone : MonoBehaviour
 		}
 		else
 		{
-			if (target != null)
+			if (_target != null)
 			{
 				MaintainHeight();
 				Strafe();
@@ -99,7 +90,7 @@ public class Drone : MonoBehaviour
 			if (closestPlayer != null)
 			{
 				_photonView.RPC("rpcSetTarget", PhotonTargets.Others, closestPlayer.photonView.owner.name);
-				target = closestPlayer.gameObject;
+				_target = closestPlayer.gameObject;
 			}
 		}
 	}
@@ -111,7 +102,7 @@ public class Drone : MonoBehaviour
 		{
 			if (player.photonView.owner.name == targetName)
 			{
-				target = player.gameObject;
+				_target = player.gameObject;
 				break;
 			}
 		}
@@ -121,54 +112,54 @@ public class Drone : MonoBehaviour
 	private void MaintainHeight()
 	{
 		float terrainHeight = Terrain.activeTerrain.SampleHeight(transform.position);
-		float targetHeight = target.transform.position.y;
+		float targetHeight = _target.transform.position.y;
 		if (terrainHeight < targetHeight)
 		{
-			hoverHeight = transform.position.y - targetHeight;
+			_hoverHeight = transform.position.y - targetHeight;
 		} else
 		{
-			hoverHeight = transform.position.y - terrainHeight;
+			_hoverHeight = transform.position.y - terrainHeight;
 		}
 		
-		if (hoverHeight != desiredHeight)
+		if (_hoverHeight != _desiredHeight)
 		{
 			Vector3 newPos = transform.position;	
-			newPos.y += (desiredHeight - hoverHeight) * hoverVelocity;
+			newPos.y += (_desiredHeight - _hoverHeight) * _hoverVelocity;
 			transform.position = newPos;
 		}
 	}
 	
 	private void Strafe()
 	{
-		if (strafeRight)
+		if (_strafeRight)
 		{
-			strafeDirection = transform.right;
+			_strafeDirection = transform.right;
 		}
 		else
 		{
-			strafeDirection = - transform.right;
+			_strafeDirection = - transform.right;
 		}
-		transform.position += strafeDirection * strafeSpeed * Time.deltaTime;
+		transform.position += _strafeDirection * _strafeSpeed * Time.deltaTime;
 	}
 	
 	// Making it follow the target
 	private void FollowPlayer()
 	{
-		transform.LookAt(target.transform); 
-		distanceToPlayer = Vector3.Distance(transform.position, target.transform.position);
-		velocity = distanceToPlayer - minDistance;
-		if (velocity > maxVelocity)
+		transform.LookAt(_target.transform); 
+		_distanceToPlayer = Vector3.Distance(transform.position, _target.transform.position);
+		_velocity = _distanceToPlayer - _minDistance;
+		if (_velocity > _maxVelocity)
 		{
-			velocity = maxVelocity;
+			_velocity = _maxVelocity;
 		}
 
-		transform.position += transform.forward * velocity * Time.deltaTime;
+		transform.position += transform.forward * _velocity * Time.deltaTime;
 
 	}
 	
 	private void TryFire()
 	{
-		if (distanceToPlayer <= firingDistance)
+		if (_distanceToPlayer <= _firingDistance)
 		{
 			float delta = Time.deltaTime;
 			_gun.UpdateFiring(delta, true);
@@ -185,7 +176,7 @@ public class Drone : MonoBehaviour
 				ChangeDirection();
 			}
 			float randomWait = Random.value - 0.5f;
-			yield return new WaitForSeconds(strafeFrequency + randomWait);
+			yield return new WaitForSeconds(_strafeFrequency + randomWait);
 		}
 	}
 	
@@ -197,7 +188,7 @@ public class Drone : MonoBehaviour
 	[RPC]
 	private void rpcChangeDirection()
 	{
-		strafeRight = !strafeRight;
+		_strafeRight = !_strafeRight;
 	}
 	
 	private IEnumerator FindNewTarget()
