@@ -4,6 +4,7 @@ using System.Collections;
 public class Grenadier : PlayerController
 {
 	[SerializeField] private Shotgun _shotgun;
+	[SerializeField] private MineLauncher _mineLauncher;
 	
 	protected override void Start()
 	{
@@ -17,9 +18,14 @@ public class Grenadier : PlayerController
 		
 		if(IsLocal)
 		{
-			if(Input.GetMouseButton(1))
+			if(Input.GetMouseButtonDown(1))
 			{
-				
+				_mineLauncher.Fire();
+			}
+			
+			if(Input.GetKeyDown(KeyCode.Tab))
+			{
+				_mineLauncher.TriggerAllMines();
 			}
 			
 			if(Input.GetMouseButtonDown(0))
