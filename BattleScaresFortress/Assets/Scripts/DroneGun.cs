@@ -4,7 +4,18 @@ using System.Collections.Generic;
 
 public class DroneGun : NetworkedComponent
 {
-	[SerializeField] private float _range = 50;
+	[SerializeField] private float _range = 50; 
+	public float Range
+	{
+		get
+		{
+			return _range;
+		}
+		set
+		{
+			_range = value;
+		}
+	}
 	[SerializeField] private float _damage = 3;
 	[SerializeField] private float _inaccuracy = 0.25f;
 	[SerializeField] private float _fireInterval = 0.3f;

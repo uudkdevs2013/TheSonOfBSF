@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System.Collections;
 
 public class Drone : MonoBehaviour
 {
@@ -21,15 +22,28 @@ public class Drone : MonoBehaviour
 	private float distanteToPlayer;									// Current distance to player
 	private float velocity;											// Current following velocity
 	
-	[SerializeField] private DroneGun _gun;
-	[SerializeField] float firingDistance = 25.0f;
-	[SerializeField] float fireInterval;
+	[SerializeField] float firingDistance;
 	float fireCounter;
+	
+	// Strafe
+	[SerializeField] float strafeSpeed = 5.0f;
+	[SerializeField] float strafeFrequency = 3.0f;
+	Vector3 strafeDirection;
+	bool strafeRight = false;
+	
+	[SerializeField] private DroneGun _gun;
 	
 	
 	// Target
 	[SerializeField]
 	private GameObject target = null;
+	
+	void Start () {
+		StartCoroutine(GetNewStrafe());
+		firingDistance = _gun.Range;
+		
+	}
+	
 	
 	// Update is called once per frame
 	private void Update()
@@ -41,6 +55,7 @@ public class Drone : MonoBehaviour
 		else
 		{
 			maintainHeight();
+			Strafe();
 			followPlayer();
 			TryFire();
 		}
@@ -104,6 +119,14 @@ public class Drone : MonoBehaviour
 		}
 	}
 	
+	void Strafe () {
+		if (strafeRight)
+			strafeDirection = transform.right;
+		else
+			strafeDirection = - transform.right;
+		transform.position += strafeDirection * strafeSpeed * Time.deltaTime;
+	}
+	
 	// Making it follow the target
 	private void followPlayer()
 	{
@@ -114,15 +137,8 @@ public class Drone : MonoBehaviour
 		{
 			velocity = maxVelocity;
 		}
-		if (distanteToPlayer > minDistance)
-		{
-			transform.position += transform.forward * velocity * Time.deltaTime;
-		}
-		else if (distanteToPlayer < minDistance)
-		{
-			//velocity = distanteToPlayer + minDistance;
-			transform.position += transform.forward * velocity * Time.deltaTime;
-		}
+
+		transform.position += transform.forward * velocity * Time.deltaTime;
 
 	}
 	
@@ -133,5 +149,18 @@ public class Drone : MonoBehaviour
 			float delta = Time.deltaTime;
 			_gun.UpdateFiring(delta, true);
 		}
+	}
+	
+	IEnumerator GetNewStrafe () {
+		while (true) {
+			int r = Random.Range(0,2);
+			if (r == 0)
+				ChangeDirection();
+			yield return new WaitForSeconds(strafeFrequency);
+		}
+	}
+	
+	void ChangeDirection () {
+		strafeRight = !strafeRight;
 	}
 }
