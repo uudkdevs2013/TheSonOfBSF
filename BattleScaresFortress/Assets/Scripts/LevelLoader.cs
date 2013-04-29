@@ -57,6 +57,7 @@ public class LevelLoader : MonoBehaviour
 	{
 		Instance._loaderCamera.enabled = true;
 		Instance._crossHairs.enabled = false;
+		Instance._playerIsDead = true;
 	}
 	
 	public static void RespawnPlayer()
