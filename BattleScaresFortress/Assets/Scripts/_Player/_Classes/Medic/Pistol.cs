@@ -2,14 +2,14 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-public class SniperRifles : NetworkedComponent
+public class Pistol : NetworkedComponent
 {
-	[SerializeField] private float _range = 200;
-	[SerializeField] private float _damage = 15;
-	[SerializeField] private float _shotCooldown = 1f;
-	[SerializeField] private float _reloadTime = 3f;
-	[SerializeField] private int _clipSize = 6;
-	[SerializeField] private int _maxAmmo = 42;
+	[SerializeField] private float _range = 30;
+	[SerializeField] private float _damage = 6;
+	[SerializeField] private float _shotCooldown = 0.0f;
+	[SerializeField] private float _reloadTime = 2f;
+	[SerializeField] private int _clipSize = 12;
+	[SerializeField] private int _maxAmmo = 48;
 	
 	[SerializeField] private AudioClip _fireSound;
 	[SerializeField] private AudioClip _emptySound;
@@ -21,7 +21,7 @@ public class SniperRifles : NetworkedComponent
 	private float _cooldown;
 	private bool _reloading;
 	
-	[SerializeField] private Transform[] _firePoints;
+	[SerializeField] private Transform _firePoint;
 	[SerializeField] private GameObject _trail;
 	private LinkedList<Vector3> _fireTargets = new LinkedList<Vector3>();
 	
@@ -60,42 +60,33 @@ public class SniperRifles : NetworkedComponent
 	{
 		if(_ammoInClip > 0 && _cooldown <= 0.0f)
 		{
-			Vector3 hit = transform.position + (_range * transform.forward);
-			foreach(Transform source in _firePoints)
+			Vector3 hit = _firePoint.position + (_firePoint.forward * _range);
+			RaycastHit rH;
+			if(Physics.Raycast(new Ray(_firePoint.position, _firePoint.forward), out rH, _range))
 			{
-				RaycastHit rH;
-				if(Physics.Raycast(new Ray(source.position, source.forward), out rH, _range))
+				// Handle damage
+				var enemy = rH.collider.gameObject.GetComponent<Enemy>();
+				if (enemy == null && rH.collider.transform.parent != null)
 				{
-					// Handle damage
-					var enemy = rH.collider.gameObject.GetComponent<Enemy>();
-					if (enemy == null && rH.collider.transform.parent != null)
-					{
-						enemy = rH.collider.transform.parent.GetComponent<Enemy>();
-					}
-					if (enemy != null)
-					{
-						enemy.ApplyDamage(_damage);
-					}
-					
-					hit = rH.point;
-					FireEffect(source, rH.point);
+					enemy = rH.collider.transform.parent.GetComponent<Enemy>();
 				}
-				else
+				if (enemy != null)
 				{
-					FireEffect(source, source.position + (_range * source.forward));
+					enemy.ApplyDamage(_damage);
 				}
+				
+				hit = rH.point;
 			}
+			
+			FireEffect(_firePoint, hit);
 			_fireTargets.AddLast(hit);
 			audio.PlayOneShot(_fireSound);
-			
 			_cooldown = _shotCooldown;
 			_ammoInClip--;
 		}
 		else
 		{
 			audio.PlayOneShot(_emptySound);
-			if(_ammoInClip == 0 && _ammo > 0)
-				Reload();
 		}
 		if(_ammoInClip == 0 && _ammo > 0)
 			Reload();
@@ -144,10 +135,7 @@ public class SniperRifles : NetworkedComponent
 		for(int i = 0; i < numTargets; i++)
 		{
 			Vector3 target = (Vector3) stream.ReceiveNext();
-			foreach(Transform source in _firePoints)
-			{
-				FireEffect(source, target);
-			}
+			FireEffect(_firePoint, target);
 			audio.PlayOneShot(_fireSound);
 		}
 	}
