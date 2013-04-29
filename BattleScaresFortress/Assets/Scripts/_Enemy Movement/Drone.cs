@@ -41,7 +41,7 @@ public class Drone : MonoBehaviour
 	void Start () {
 		StartCoroutine(GetNewStrafe());
 		firingDistance = _gun.Range;
-		
+		StartCoroutine(FindNewTarget());
 	}
 	
 	
@@ -162,5 +162,12 @@ public class Drone : MonoBehaviour
 	
 	void ChangeDirection () {
 		strafeRight = !strafeRight;
+	}
+	
+	IEnumerator FindNewTarget () {
+		while (true) {
+			FindTarget();
+			yield return new WaitForSeconds(10f);
+		}
 	}
 }
