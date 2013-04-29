@@ -60,6 +60,15 @@ public class Minigun : NetworkedComponent
 			if(Physics.Raycast(new Ray(_firePoint.position, direction), out rH, _range))
 			{
 				// Handle damage
+				var enemy = rH.collider.gameObject.GetComponent<Enemy>();
+				if (enemy == null && rH.collider.transform.parent != null)
+				{
+					enemy = rH.collider.transform.parent.GetComponent<Enemy>();
+				}
+				if (enemy != null)
+				{
+					enemy.ApplyDamage(_damage);
+				}
 				
 				hit = rH.point;
 			}
