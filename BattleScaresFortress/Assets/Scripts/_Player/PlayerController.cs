@@ -21,6 +21,7 @@ public class PlayerController : MonoBehaviour
 	
 	[SerializeField] private GameObject[] _disableIfLocal;
 	[SerializeField] private GameObject[] _disableIfNetworked;
+	[SerializeField] private GUISkin _guiSkin;
 	
 	public bool IsLocal { get; set; }
 	
@@ -80,21 +81,23 @@ public class PlayerController : MonoBehaviour
 	
 	protected void OnGUI()
 	{
-		if (_health > 30)
+		if(IsLocal)
 		{
-			GUI.color = Color.green;
+			GUI.skin = _guiSkin;
+			
+			if (_health > 30)
+				GUI.color = Color.green;
+			else if (_health > 15)
+				GUI.color = Color.yellow;
+			else
+				GUI.color = Color.red;
+			
+			int w = Screen.width;
+			int h = Screen.height;
+			GUI.Label(new Rect(w * 0.75f, 20, w * 0.25f, 40), "HP: " + _health);
+			
+			GUI.color = Color.white;
 		}
-		else if (_health > 15)
-		{
-			GUI.color = Color.yellow;
-		}
-		else
-		{
-			GUI.color = Color.red;
-		}
-		GUI.Label(new Rect(Screen.width - 150, 20, 150, 20), "Health: " + _health);
-		
-		GUI.color = Color.white;
 	}
 	
 	protected virtual void Update()

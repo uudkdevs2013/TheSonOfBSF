@@ -1,107 +1,106 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>10.0.20506</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{429684E2-5BBB-93D5-0A32-5A44BB3A750D}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>AssemblyUnityScript</RootNamespace>
-    <AssemblyName>Assembly-UnityScript</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <UsePartialTypes>false</UsePartialTypes>
+	<Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+	<Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+	<ProductVersion>10.0.20506</ProductVersion>
+	<SchemaVersion>2.0</SchemaVersion>
+	<ProjectGuid>{429684E2-5BBB-93D5-0A32-5A44BB3A750D}</ProjectGuid>
+	<OutputType>Library</OutputType>
+	<AppDesignerFolder>Properties</AppDesignerFolder>
+	<RootNamespace></RootNamespace>
+	<AssemblyName>Assembly-UnityScript</AssemblyName>
+	<TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+	<FileAlignment>512</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>Temp\bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE;UNITY_STANDALONE_WIN;ENABLE_MICROPHONE;ENABLE_IMAGEEFFECTS;ENABLE_WEBCAM;ENABLE_AUDIO_FMOD;UNITY_STANDALONE;ENABLE_NETWORK;ENABLE_MONO;ENABLE_PHYSICS;ENABLE_TERRAIN;ENABLE_CACHING;ENABLE_SUBSTANCE;ENABLE_GENERICS;ENABLE_CLOTH;ENABLE_MOVIES;ENABLE_AUDIO;ENABLE_WWW;ENABLE_SHADOWS;ENABLE_DUCK_TYPING;UNITY_4_1_2;UNITY_4_1;ENABLE_PROFILER;UNITY_EDITOR</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <NoWarn>0169</NoWarn>
+	<DebugSymbols>true</DebugSymbols>
+	<DebugType>full</DebugType>
+	<Optimize>false</Optimize>
+	<OutputPath>Temp\bin\Debug\</OutputPath>
+	<DefineConstants>DEBUG;TRACE;UNITY_STANDALONE_WIN;ENABLE_MICROPHONE;ENABLE_IMAGEEFFECTS;ENABLE_WEBCAM;ENABLE_AUDIO_FMOD;UNITY_STANDALONE;ENABLE_NETWORK;ENABLE_MONO;ENABLE_PHYSICS;ENABLE_TERRAIN;ENABLE_CACHING;ENABLE_SUBSTANCE;ENABLE_GENERICS;ENABLE_CLOTH;ENABLE_MOVIES;ENABLE_AUDIO;ENABLE_WWW;ENABLE_SHADOWS;ENABLE_DUCK_TYPING;UNITY_4_1_2;UNITY_4_1;ENABLE_PROFILER;UNITY_EDITOR</DefineConstants>
+	<ErrorReport>prompt</ErrorReport>
+	<WarningLevel>4</WarningLevel>
+	<NoWarn>0169</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>Temp\bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <NoWarn>0169</NoWarn>
+	<DebugType>pdbonly</DebugType>
+	<Optimize>true</Optimize>
+	<OutputPath>Temp\bin\Release\</OutputPath>
+	<DefineConstants>TRACE</DefineConstants>
+	<ErrorReport>prompt</ErrorReport>
+	<WarningLevel>4</WarningLevel>
+	<NoWarn>0169</NoWarn>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="UnityEngine">
-      <HintPath>..\..\..\..\Applications\Unity\Unity.app\Contents\Frameworks\Managed\UnityEngine.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEditor">
-      <HintPath>..\..\..\..\Applications\Unity\Unity.app\Contents\Frameworks\Managed\UnityEditor.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Xml" />
-    <Reference Include="Ionic.Zip.Reduced">
-      <HintPath>Assets\AstarPathfindingProject\Plugins\DotNetZip\Ionic.Zip.Reduced.dll</HintPath>
-    </Reference>
-    <Reference Include="JsonFx.Json">
-      <HintPath>Assets\AstarPathfindingProject\Plugins\JsonFx\JsonFx.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="Photon3Unity3D">
-      <HintPath>Assets\Photon Unity Networking\Plugins\PhotonNetwork\library\Photon3Unity3D.dll</HintPath>
-    </Reference>
+	<Reference Include="System" />
+    <Reference Include="System.XML" />
+	<Reference Include="System.Core" />
+	<Reference Include="UnityEngine">
+	  <HintPath>J:/Development/Unity/Editor/Data/Managed/UnityEngine.dll</HintPath>
+	</Reference>
+	<Reference Include="UnityEditor">
+	  <HintPath>J:/Development/Unity/Editor/Data/Managed/UnityEditor.dll</HintPath>
+	</Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\BSF_Asset_Files\Detonator Explosion Framework\Sample Supporting Emitters\Detonator Spray Helper.js" />
-    <Compile Include="Assets\BSF_Asset_Files\Detonator Explosion Framework\TestScene\DetonatorTest.js" />
-    <Compile Include="Assets\BSF_Asset_Files\Standard Assets\Character Controllers\Sources\Scripts\PlatformInputController.js" />
-    <Compile Include="Assets\BSF_Asset_Files\Standard Assets\Character Controllers\Sources\Scripts\ThirdPersonCamera.js" />
-    <Compile Include="Assets\BSF_Asset_Files\Standard Assets\Character Controllers\Sources\Scripts\ThirdPersonController.js" />
-    <Compile Include="Assets\BSF_Asset_Files\Standard Assets\Particles\Legacy Particles\TimedObjectDestructor.js" />
-    <Compile Include="Assets\Scripts\_Player\CharacterMotor.js" />
-    <Compile Include="Assets\Scripts\_Player\FPSInputController.js" />
-    <None Include="Assets\AstarPathfindingProject\Editor\EditorAssets\Materials\Navmesh2.shader" />
-    <None Include="Assets\AstarPathfindingProject\Plugins\DotNetZip\License.txt" />
-    <None Include="Assets\Photon Unity Networking\Plugins\PhotonNetwork\library\Photon3Unity3D.xml" />
-    <None Include="Assets\BSF_Asset_Files\Detonator Explosion Framework\Resources\Detonator\Textures\HeatDistort.shader" />
-    <None Include="Assets\BSF_Asset_Files\Standard Assets\Skyboxes\_skybox info.txt" />
-    <None Include="Assets\Photon Unity Networking\Plugins\PhotonNetwork\library\release_history.txt" />
-    <None Include="Assets\AstarPathfindingProject\Editor\EditorAssets\Materials\Navmesh.shader" />
-    <None Include="Assets\AstarPathfindingProject\Plugins\dependencies.txt" />
-    <None Include="Assets\AstarPathfindingProject\Readme_upgrading.txt" />
-    <None Include="Assets\AstarPathfindingProject\Readme.txt" />
-    <None Include="Assets\Photon Unity Networking\readme.txt" />
-    <None Include="Assets\AstarPathfindingProject\Plugins\JsonFx\License.txt" />
-    <None Include="Assets\AstarPathfindingProject\Plugins\JsonFx\Readme.txt" />
-    <None Include="Assets\BSF_Asset_Files\Models\Environment\Objects\Trash\license.txt" />
-    <None Include="Assets\Shaders\Color Only.shader" />
-    <None Include="Assets\AstarPathfindingProject\link.xml" />
-    <None Include="Assets\Photon Unity Networking\changelog.txt" />
-    <Compile Include="Assets\BSF_Asset_Files\Standard Assets %28Mobile%29\Scripts\CameraRelativeControl.js" />
-    <Compile Include="Assets\BSF_Asset_Files\Standard Assets %28Mobile%29\Scripts\FirstPersonControl.js" />
-    <Compile Include="Assets\BSF_Asset_Files\Standard Assets %28Mobile%29\Scripts\FollowTransform.js" />
-    <Compile Include="Assets\BSF_Asset_Files\Standard Assets %28Mobile%29\Scripts\Joystick.js" />
-    <Compile Include="Assets\BSF_Asset_Files\Standard Assets %28Mobile%29\Scripts\ObliqueNear.js" />
-    <Compile Include="Assets\BSF_Asset_Files\Standard Assets %28Mobile%29\Scripts\PlayerRelativeControl.js" />
-    <Compile Include="Assets\BSF_Asset_Files\Standard Assets %28Mobile%29\Scripts\RollABall.js" />
-    <Compile Include="Assets\BSF_Asset_Files\Standard Assets %28Mobile%29\Scripts\RotationConstraint.js" />
-    <Compile Include="Assets\BSF_Asset_Files\Standard Assets %28Mobile%29\Scripts\SidescrollControl.js" />
-    <Compile Include="Assets\BSF_Asset_Files\Standard Assets %28Mobile%29\Scripts\SmoothFollow2D.js" />
-    <Compile Include="Assets\BSF_Asset_Files\Standard Assets %28Mobile%29\Scripts\ZoomCamera.js" />
-    <Compile Include="Assets\BSF_Asset_Files\Standard Assets %28Mobile%29\Scripts\tapcontrol.js" />
-    <None Include="Assets\BSF_Asset_Files\Standard Assets %28Mobile%29\Shaders\Particle Shaders\Mobile Multiply Culled.shader" />
-    <None Include="Assets\BSF_Asset_Files\Standard Assets %28Mobile%29\Shaders\Miscellaneous Shaders\Mobile Background.shader" />
-    <None Include="Assets\BSF_Asset_Files\Standard Assets %28Mobile%29\Shaders\Vertex Colored Shaders\Mobile Transparent Vertex Color.shader" />
-    <None Include="Assets\BSF_Asset_Files\Standard Assets %28Mobile%29\Shaders\Miscellaneous Shaders\Mobile Detail.shader" />
-    <None Include="Assets\BSF_Asset_Files\Standard Assets\Particles\Sources\Shaders\Particle Alpha Blend %28Queue +100%29.shader" />
-    <None Include="Assets\BSF_Asset_Files\Standard Assets\Water %28Basic%29\Sources\Shaders\FX-Water Simple.shader" />
-    <None Include="Assets\BSF_Asset_Files\Standard Assets %28Mobile%29\Shaders\Lightmap Shaders %28Legacy%29\Mobile Lightmap Reflective.shader" />
-    <None Include="Assets\BSF_Asset_Files\Standard Assets %28Mobile%29\Shaders\Particle Shaders\Mobile Particles Additive Culled.shader" />
-    <None Include="Assets\BSF_Asset_Files\Standard Assets %28Mobile%29\Shaders\Vertex Colored Shaders\Mobile Vertex Colored.shader" />
-    <None Include="Assets\BSF_Asset_Files\Standard Assets %28Mobile%29\Shaders\Lightmap Shaders %28Legacy%29\Mobile Lightmap Only.shader" />
-    <None Include="Assets\BSF_Asset_Files\Standard Assets %28Mobile%29\Shaders\Lightmap Shaders %28Legacy%29\Mobile Lightmap AlphaTest.shader" />
+     <Compile Include="Assets\BSF_Asset_Files\Detonator Explosion Framework\Sample Supporting Emitters\Detonator Spray Helper.js" />
+     <Compile Include="Assets\BSF_Asset_Files\Detonator Explosion Framework\TestScene\DetonatorTest.js" />
+     <Compile Include="Assets\BSF_Asset_Files\Standard Assets (Mobile)\Scripts\CameraRelativeControl.js" />
+     <Compile Include="Assets\BSF_Asset_Files\Standard Assets (Mobile)\Scripts\FirstPersonControl.js" />
+     <Compile Include="Assets\BSF_Asset_Files\Standard Assets (Mobile)\Scripts\FollowTransform.js" />
+     <Compile Include="Assets\BSF_Asset_Files\Standard Assets (Mobile)\Scripts\Joystick.js" />
+     <Compile Include="Assets\BSF_Asset_Files\Standard Assets (Mobile)\Scripts\ObliqueNear.js" />
+     <Compile Include="Assets\BSF_Asset_Files\Standard Assets (Mobile)\Scripts\PlayerRelativeControl.js" />
+     <Compile Include="Assets\BSF_Asset_Files\Standard Assets (Mobile)\Scripts\RollABall.js" />
+     <Compile Include="Assets\BSF_Asset_Files\Standard Assets (Mobile)\Scripts\RotationConstraint.js" />
+     <Compile Include="Assets\BSF_Asset_Files\Standard Assets (Mobile)\Scripts\SidescrollControl.js" />
+     <Compile Include="Assets\BSF_Asset_Files\Standard Assets (Mobile)\Scripts\SmoothFollow2D.js" />
+     <Compile Include="Assets\BSF_Asset_Files\Standard Assets (Mobile)\Scripts\ZoomCamera.js" />
+     <Compile Include="Assets\BSF_Asset_Files\Standard Assets (Mobile)\Scripts\tapcontrol.js" />
+     <Compile Include="Assets\BSF_Asset_Files\Standard Assets\Character Controllers\Sources\Scripts\PlatformInputController.js" />
+     <Compile Include="Assets\BSF_Asset_Files\Standard Assets\Character Controllers\Sources\Scripts\ThirdPersonCamera.js" />
+     <Compile Include="Assets\BSF_Asset_Files\Standard Assets\Character Controllers\Sources\Scripts\ThirdPersonController.js" />
+     <Compile Include="Assets\BSF_Asset_Files\Standard Assets\Particles\Legacy Particles\TimedObjectDestructor.js" />
+     <Compile Include="Assets\Scripts\_Player\CharacterMotor.js" />
+     <Compile Include="Assets\Scripts\_Player\FPSInputController.js" />
+     <None Include="Assets\BSF_Asset_Files\Standard Assets (Mobile)\Shaders\Particle Shaders\Mobile Multiply Culled.shader" />
+     <None Include="Assets\BSF_Asset_Files\Standard Assets (Mobile)\Shaders\Miscellaneous Shaders\Mobile Background.shader" />
+     <None Include="Assets\AstarPathfindingProject\Editor\EditorAssets\Materials\Navmesh2.shader" />
+     <None Include="Assets\BSF_Asset_Files\Standard Assets (Mobile)\Shaders\Vertex Colored Shaders\Mobile Transparent Vertex Color.shader" />
+     <None Include="Assets\AstarPathfindingProject\Plugins\DotNetZip\License.txt" />
+     <None Include="Assets\BSF_Asset_Files\Standard Assets (Mobile)\Shaders\Miscellaneous Shaders\Mobile Detail.shader" />
+     <None Include="Assets\BSF_Asset_Files\Standard Assets\Particles\Sources\Shaders\Particle Alpha Blend (Queue +100).shader" />
+     <None Include="Assets\Photon Unity Networking\Plugins\PhotonNetwork\library\Photon3Unity3D.xml" />
+     <None Include="Assets\BSF_Asset_Files\Detonator Explosion Framework\Resources\Detonator\Textures\HeatDistort.shader" />
+     <None Include="Assets\BSF_Asset_Files\Standard Assets\Skyboxes\_skybox info.txt" />
+     <None Include="Assets\Photon Unity Networking\Plugins\PhotonNetwork\library\release_history.txt" />
+     <None Include="Assets\AstarPathfindingProject\Editor\EditorAssets\Materials\Navmesh.shader" />
+     <None Include="Assets\AstarPathfindingProject\Plugins\dependencies.txt" />
+     <None Include="Assets\BSF_Asset_Files\Standard Assets\Water (Basic)\Sources\Shaders\FX-Water Simple.shader" />
+     <None Include="Assets\BSF_Asset_Files\Standard Assets (Mobile)\Shaders\Lightmap Shaders (Legacy)\Mobile Lightmap Reflective.shader" />
+     <None Include="Assets\AstarPathfindingProject\Readme_upgrading.txt" />
+     <None Include="Assets\BSF_Asset_Files\Standard Assets (Mobile)\Shaders\Particle Shaders\Mobile Particles Additive Culled.shader" />
+     <None Include="Assets\AstarPathfindingProject\Readme.txt" />
+     <None Include="Assets\BSF_Asset_Files\Standard Assets (Mobile)\Shaders\Vertex Colored Shaders\Mobile Vertex Colored.shader" />
+     <None Include="Assets\BSF_Asset_Files\Standard Assets (Mobile)\Shaders\Lightmap Shaders (Legacy)\Mobile Lightmap Only.shader" />
+     <None Include="Assets\BSF_Asset_Files\Standard Assets (Mobile)\Shaders\Lightmap Shaders (Legacy)\Mobile Lightmap AlphaTest.shader" />
+     <None Include="Assets\Photon Unity Networking\readme.txt" />
+     <None Include="Assets\AstarPathfindingProject\Plugins\JsonFx\License.txt" />
+     <None Include="Assets\AstarPathfindingProject\Plugins\JsonFx\Readme.txt" />
+     <None Include="Assets\BSF_Asset_Files\Models\Environment\Objects\Trash\license.txt" />
+     <None Include="Assets\Shaders\Color Only.shader" />
+     <None Include="Assets\AstarPathfindingProject\link.xml" />
+     <None Include="Assets\Photon Unity Networking\changelog.txt" />
+ <Reference Include="Ionic.Zip.Reduced">
+ <HintPath>Assets\AstarPathfindingProject\Plugins\DotNetZip\Ionic.Zip.Reduced.dll</HintPath>
+ </Reference>
+ <Reference Include="JsonFx.Json">
+ <HintPath>Assets\AstarPathfindingProject\Plugins\JsonFx\JsonFx.Json.dll</HintPath>
+ </Reference>
+ <Reference Include="Photon3Unity3D">
+ <HintPath>Assets\Photon Unity Networking\Plugins\PhotonNetwork\library\Photon3Unity3D.dll</HintPath>
+ </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
@@ -111,4 +110,5 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  
 </Project>
