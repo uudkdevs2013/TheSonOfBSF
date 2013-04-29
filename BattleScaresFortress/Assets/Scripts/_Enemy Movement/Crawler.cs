@@ -1,9 +1,11 @@
 using UnityEngine;
 using System.Collections;
 
-public class Crawler : MonoBehaviour {
+public class Crawler : MonoBehaviour
+{
 	
-	[SerializeField] PhotonView _photonView;
+	[SerializeField]
+	PhotonView _photonView;
 	
 	// Player following-related
 	[SerializeField]
@@ -23,34 +25,45 @@ public class Crawler : MonoBehaviour {
 	// Target
 	[SerializeField]
 	private GameObject target = null;
-	
-	[SerializeField] float firingDistance;
+	[SerializeField]
+	float firingDistance;
 	float fireCounter;
-	[SerializeField] float fireInterval;
-	
-	[SerializeField] private CrawlerGun _gun;
-	
+	[SerializeField]
+	float fireInterval;
+	[SerializeField]
+	private CrawlerGun _gun;
 	bool isPathing;
 	
 	// Use this for initialization
-	void Start () {
+	private void Start()
+	{
 		firingDistance = _gun.Range;
-		StartCoroutine(FindNewTarget());
+		if (_photonView.isMine)
+		{
+			StartCoroutine(FindNewTarget());
+		}
 	}
 	
 	// Update is called once per frame
-	void Update () {
-		if (target == null)
+	private void Update()
+	{
+		if (_photonView.isMine && target == null)
 		{
 			FindTarget();
 		}
-		else {
+		
+		if (target != null)
+		{
 			isPathing = GetComponent<AstarAI>().inPathArea;
-			if (!isPathing) {
+			if (!isPathing)
+			{
 				maintainHeight();
 				followPlayer();
 			}
-			TryFire();
+			if (_photonView.isMine)
+			{
+				TryFire();
+			}
 		}
 	}
 	
@@ -77,27 +90,42 @@ public class Crawler : MonoBehaviour {
 		}
 	}
 	
-	
-	void TryFire()
+	[RPC]
+	private void rpcSetTarget(string targetName)
 	{
-		distanceToPlayer = Vector3.Distance(transform.position, target.transform.position);
-		if (distanceToPlayer <= firingDistance)
+		foreach (var player in PlayerController.GetAllPlayers())
 		{
-			float delta = Time.deltaTime;
-			_gun.UpdateFiring(delta, true);
+			if (player.photonView.owner.name == targetName)
+			{
+				target = player.gameObject;
+				break;
+			}
 		}
 	}
 	
-
+	private void TryFire()
+	{
+		if (_photonView.isMine)
+		{
+			distanceToPlayer = Vector3.Distance(transform.position, target.transform.position);
+			if (distanceToPlayer <= firingDistance)
+			{
+				float delta = Time.deltaTime;
+				_gun.UpdateFiring(delta, true);
+			}
+		}
+	}
 	
-	IEnumerator FindNewTarget () {
-		while (true) {
+	private IEnumerator FindNewTarget()
+	{
+		while (true)
+		{
 			FindTarget();
 			yield return new WaitForSeconds(10f);
 		}
 	}
 	
-		// Maintain desired height
+	// Maintain desired height
 	private void maintainHeight()
 	{
 		float terrainHeight = Terrain.activeTerrain.SampleHeight(transform.position);
