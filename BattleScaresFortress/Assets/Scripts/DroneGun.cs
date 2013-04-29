@@ -46,6 +46,8 @@ public class DroneGun : NetworkedComponent
 	
 	public void Fire()
 	{
+		Debug.Log("DRONE IS FIRING!!!!");
+		
 		Vector3 direction = GetInaccuracy(_firePoint, _inaccuracy);
 		Vector3 hit = _firePoint.position + (_range * direction);
 		RaycastHit rH;
