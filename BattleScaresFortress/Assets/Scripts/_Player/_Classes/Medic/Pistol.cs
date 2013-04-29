@@ -109,7 +109,7 @@ public class Pistol : NetworkedComponent
 			GUI.skin = _guiSkin;
 			int w = Screen.width;
 			int h = Screen.height;
-			GUI.Label(new Rect(w * 0.75f, h * 0.85f, w * 0.25f, h * 0.15f), _ammoInClip + " / " + _ammo);
+			GUI.Label(new Rect(0, h * 0.85f, w * 0.25f, h * 0.15f), _ammoInClip + " / " + _ammo);
 		}
 	}
 	
