@@ -49,4 +49,9 @@ public class Sniper : PlayerController
 			}
 		}
 	}
+	
+	public override void PerformAmmoRefill()
+	{
+		_rifles.RefillAmmo();
+	}
 }

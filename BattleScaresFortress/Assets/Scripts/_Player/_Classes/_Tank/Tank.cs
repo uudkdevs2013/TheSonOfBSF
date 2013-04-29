@@ -26,4 +26,10 @@ public class Tank : PlayerController
 			}
 		}
 	}
+	
+	public override void PerformAmmoRefill()
+	{
+		_minigun.RefillAmmo();
+		_rocketLauncher.RefillAmmo();
+	}
 }

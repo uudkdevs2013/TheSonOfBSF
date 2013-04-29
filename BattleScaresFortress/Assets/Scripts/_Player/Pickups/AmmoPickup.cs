@@ -37,7 +37,7 @@ public class AmmoPickup : MonoBehaviour
 					{
 						PhotonNetwork.Destroy(_photonView);
 						_used = true;
-						//player.RefillAmmo();
+						player.RefillAmmo();
 					}
 			}
 		}

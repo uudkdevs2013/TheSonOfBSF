@@ -27,6 +27,11 @@ public class RocketLauncher : NetworkedComponent
 		_cooldown -= Time.deltaTime;
 	}
 	
+	public void RefillAmmo()
+	{
+		_ammo = _maxAmmo;
+	}
+	
 	public void Fire()
 	{
 		if(_ammo > 0 && _cooldown <= 0.0f)

@@ -39,4 +39,10 @@ public class Grenadier : PlayerController
 			}
 		}
 	}
+	
+	public override void PerformAmmoRefill()
+	{
+		_shotgun.RefillAmmo();
+		_mineLauncher.RefillAmmo();
+	}
 }

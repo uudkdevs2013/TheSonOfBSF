@@ -211,6 +211,19 @@ public class PlayerController : MonoBehaviour
 		}
 	}
 	
+	public void RefillAmmo()
+	{
+		_photonView.RPC("rpcRefillAmmo", PhotonTargets.All);
+	}
+	
+	[RPC]
+	protected void rpcRefillAmmo()
+	{
+		PerformAmmoRefill();
+	}
+	
+	public virtual void PerformAmmoRefill() { }
+	
 	public void ApplyHeal(float amountOfHeal)
 	{
 		if (_health >= _maxHealth)
