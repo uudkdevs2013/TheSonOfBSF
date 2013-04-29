@@ -16,6 +16,7 @@ public class Sniper : PlayerController
 	protected override void Start()
 	{
 		base.Start();
+		Debug.Log("Sniper is local: " + IsLocal);
 		_baseFoV = _camera.fov;
 		_baseSensitivity = _aimSensitivity;
 	}

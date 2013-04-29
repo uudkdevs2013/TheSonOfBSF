@@ -8,6 +8,7 @@ public class Grenadier : PlayerController
 	protected override void Start()
 	{
 		base.Start();
+		Debug.Log("Grenadier is local: " + IsLocal);
 	}
 	
 	protected override void Update()

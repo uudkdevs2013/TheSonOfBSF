@@ -8,6 +8,7 @@ public class Tank : PlayerController
 	protected override void Start()
 	{
 		base.Start();
+		Debug.Log("Tank is local: " + IsLocal);
 	}
 	
 	protected override void Update()

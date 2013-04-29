@@ -22,6 +22,7 @@ public class BulletTrail : MonoBehaviour
 		if(_counter <= 0.0f)
 		{
 			GameObject.Destroy(gameObject);
+			GameObject.Destroy(this);
 		}
 		else
 		{
