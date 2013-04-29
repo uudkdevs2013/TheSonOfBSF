@@ -29,6 +29,11 @@ public class Minigun : NetworkedComponent
 		_ammo = _maxAmmo;
 	}
 	
+	public void RefillAmmo()
+	{
+		_ammo = _maxAmmo;
+	}
+	
 	public void UpdateFiring(float delta, bool fire)
 	{
 		if(fire)

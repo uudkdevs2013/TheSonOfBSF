@@ -37,6 +37,13 @@ public class Shotgun : NetworkedComponent
 		_cooldown -= Time.deltaTime;
 	}
 	
+	public void RefillAmmo()
+	{
+		_ammo = _maxAmmo;
+		if(_ammoInClip == 0 && _ammo > 0)
+			Reload();
+	}
+	
 	public void Reload()
 	{
 		if(!_reloading && _ammoInClip < _ammo && _ammo > 0)

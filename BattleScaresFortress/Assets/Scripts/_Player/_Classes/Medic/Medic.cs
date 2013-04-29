@@ -34,4 +34,9 @@ public class Medic : PlayerController
 			}
 		}
 	}
+	
+	public override void PerformAmmoRefill()
+	{
+		_pistol.RefillAmmo();
+	}
 }
