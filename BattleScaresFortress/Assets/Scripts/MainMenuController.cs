@@ -58,11 +58,15 @@ public class MainMenuController : MonoBehaviour
 			
 			GUI.Label(new Rect(Screen.width - 400, 20, 200, 20), "Select a room to join");
 			var roomList = PhotonNetwork.GetRoomList();
-			for (int i = 0; i < roomList.Length; ++i)
+			for (int i = 0, row = 0; i < roomList.Length; ++i)
 			{
-				if (GUI.Button(new Rect(Screen.width - 400, i * 30 + 50, 200, 20), roomList[i].name))
+				if (roomList[i].open)
 				{
-					MatchMakingController.Instance.JoinRoom(roomList[i].name);
+					if (GUI.Button(new Rect(Screen.width - 400, row * 30 + 50, 200, 20), roomList[i].name))
+					{
+						MatchMakingController.Instance.JoinRoom(roomList[i].name);
+					}
+					++row;
 				}
 			}
 		}

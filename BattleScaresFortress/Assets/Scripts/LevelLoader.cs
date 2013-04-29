@@ -9,7 +9,7 @@ public class LevelLoader : MonoBehaviour
 	
 	public static LevelLoader Instance { get; private set; }
 	private bool _isRespawningPlayer = false;
-	private float _timeUntilRespawn = 10f;
+	private float _timeUntilRespawn = 0f;
 	
 	private void Awake()
 	{
@@ -82,7 +82,7 @@ public class LevelLoader : MonoBehaviour
 		_isRespawningPlayer = true;
 		_loaderCamera.enabled = true;
 		_crossHairs.enabled = false;
-		_timeUntilRespawn = 5f;
+		_timeUntilRespawn = 0f;
 	}
 	
 	private void OnGUI()

@@ -78,6 +78,25 @@ public class PlayerController : MonoBehaviour
 		}
 	}
 	
+	protected void OnGUI()
+	{
+		if (_health > 30)
+		{
+			GUI.color = Color.green;
+		}
+		else if (_health > 15)
+		{
+			GUI.color = Color.yellow;
+		}
+		else
+		{
+			GUI.color = Color.red;
+		}
+		GUI.Label(new Rect(Screen.width - 150, 20, 150, 20), "Health: " + _health);
+		
+		GUI.color = Color.white;
+	}
+	
 	protected virtual void Update()
 	{
 		if(IsLocal)

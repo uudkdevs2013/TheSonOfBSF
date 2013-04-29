@@ -32,7 +32,6 @@ public class MatchMakingController : Photon.MonoBehaviour
 	
 	private void Start()
 	{
-//		print("send rate: " + PhotonNetwork.sendRate + "  send rate on serialize: " + PhotonNetwork.sendRateOnSerialize);
 		PhotonNetwork.sendRate = 40;
 		PhotonNetwork.sendRateOnSerialize = 30;
 	}
@@ -72,6 +71,7 @@ public class MatchMakingController : Photon.MonoBehaviour
 	
 	public void StartMatch(string level)
 	{
+		PhotonNetwork.room.open = false;
 		_pv.RPC("rpcStartMatch", PhotonTargets.All, level);
 	}
 	
