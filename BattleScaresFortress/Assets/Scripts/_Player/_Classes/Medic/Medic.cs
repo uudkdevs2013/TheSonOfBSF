@@ -17,7 +17,7 @@ public class Medic : PlayerController
 		
 		if(IsLocal)
 		{
-			if(Input.GetMouseButton(1))
+			if(Input.GetMouseButtonDown(1))
 			{
 				_pistol.Fire();
 			}

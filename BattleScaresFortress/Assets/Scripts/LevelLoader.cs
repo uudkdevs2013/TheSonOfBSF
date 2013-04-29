@@ -111,7 +111,14 @@ public class LevelLoader : MonoBehaviour
 					_crossHairs.enabled = true;
 					SpawnTank(new Vector3(1006, 50, 1042));
 				}
-				if (GUI.Button(new Rect(100, 180, 200, 30), "Grenadier"))
+				if (GUI.Button(new Rect(100, 180, 200, 30), "Medic"))
+				{
+					_isRespawningPlayer = false;
+					_loaderCamera.enabled = false;
+					_crossHairs.enabled = true;
+					SpawnMedic(new Vector3(1006, 50, 1042));
+				}
+				if (GUI.Button(new Rect(100, 220, 200, 30), "Grenadier"))
 				{
 					_isRespawningPlayer = false;
 					_loaderCamera.enabled = false;
