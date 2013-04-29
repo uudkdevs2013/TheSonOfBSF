@@ -5,6 +5,7 @@ public class Spawner : MonoBehaviour
 {
 	
 	[SerializeField] private string[] _enemies;
+	[SerializeField] private string[] _toughEnemies;
 	[SerializeField] private GameObject[] _spawnPoints;
 	[SerializeField] private float _maxSpawnRange;
 	[SerializeField] private float _breakTimeBetweenWaves;
@@ -23,7 +24,6 @@ public class Spawner : MonoBehaviour
 	{
 		if (!PhotonNetwork.isMasterClient)
 		{
-			print("not master client");
 			this.enabled = false;
 		}
 		CurrentWave = 0;
@@ -83,33 +83,47 @@ public class Spawner : MonoBehaviour
 	
 	private void SpawnEnemies(int numberOfEnemiesToSpawn)
 	{
+		int numberOfToughEnemiesToSpawn = 0;
+		if (CurrentWave < 5)
+		{
+			numberOfToughEnemiesToSpawn = 0;
+		}
+		else if (CurrentWave < 10)
+		{
+			numberOfToughEnemiesToSpawn = numberOfEnemiesToSpawn / 5;
+		}
+		else if (CurrentWave < 15)
+		{
+			numberOfToughEnemiesToSpawn = numberOfEnemiesToSpawn / 10;
+		}
+		else
+		{
+			numberOfToughEnemiesToSpawn = numberOfEnemiesToSpawn;
+		}
+		numberOfEnemiesToSpawn -= numberOfToughEnemiesToSpawn;
+		print("spawning:    " + numberOfEnemiesToSpawn + " normal enemies     " + numberOfToughEnemiesToSpawn + " tough enemies");
+		SpawnEnemies(numberOfEnemiesToSpawn, _enemies);
+		SpawnEnemies(numberOfToughEnemiesToSpawn, _toughEnemies);
+	}
+	
+	private void SpawnEnemies(int numberOfEnemiesToSpawn, string[] enemiesToSpawn)
+	{
 		int spawnIndex = (int)(Random.value * ((float)_spawnPoints.Length));
 		for (int i = 0; i < numberOfEnemiesToSpawn; ++i)
 		{
-			int index = (int)(Random.value * ((float)_enemies.Length));
+			int index = (int)(Random.value * ((float)enemiesToSpawn.Length));
 			
 			var deltaPosition = new Vector2(Random.value * 2 - 1, Random.value * 2 - 1);
 			deltaPosition *= _maxSpawnRange;
 			var spawnPosition = _spawnPoints[spawnIndex].transform.position + new Vector3(deltaPosition.x, 0, deltaPosition.y);
 			
-			var enemy = PhotonNetwork.Instantiate(_enemies[index], spawnPosition, Quaternion.Euler(0, 0, 0), 0);
-			EnableScripts(enemy);
+			PhotonNetwork.Instantiate(enemiesToSpawn[index], spawnPosition, Quaternion.Euler(0, 0, 0), 0);
 		}
 		_enemiesLeftToSpawn -= numberOfEnemiesToSpawn;
 	}
 	
-	private void EnableScripts(GameObject enemy)
-	{
-//		var hover = enemy.GetComponent<Hover>();
-//		if (hover != null)
-//		{
-//			hover.enabled = true;
-//		}
-	}
-	
 	private void GoToNextWave()
 	{
-		print("next wave");
 		IsInWave = false;
 		++CurrentWave;
 		
