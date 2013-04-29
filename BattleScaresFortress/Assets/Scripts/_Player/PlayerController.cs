@@ -30,6 +30,7 @@ public class PlayerController : MonoBehaviour
 	private float _minAimY = -60;
 	private float _maxAimY = 60;
 	protected float _health = 50;
+	protected float _maxHealth = 50;
 	
 	protected Vector2 _aim = new Vector2(0, 0);
 	protected Vector2 _aimSensitivity = new Vector2(15, 15);
@@ -204,6 +205,25 @@ public class PlayerController : MonoBehaviour
 		if (_health < 0)
 		{
 			Die();
+		}
+	}
+	
+	public void ApplyHeal(float amountOfHeal)
+	{
+		if (_health >= _maxHealth)
+		{
+			return;
+		}
+		_photonView.RPC("rpcApplyHeal", PhotonTargets.All, amountOfHeal);
+	}
+	
+	[RPC]
+	protected void rpcApplyHeal(float amountOfHeal)
+	{
+		_health += amountOfHeal;
+		if (_health > _maxHealth)
+		{
+			_health = _maxHealth;
 		}
 	}
 	
