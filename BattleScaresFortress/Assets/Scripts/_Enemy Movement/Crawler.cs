@@ -87,6 +87,32 @@ public class Crawler : MonoBehaviour
 		}
 	}
 	
+	protected void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+	{
+		if (stream.isWriting)
+		{
+			stream.SendNext(transform.position);
+			if(_gun.NeedsSend())
+			{
+				stream.SendNext(true);
+				_gun.SendData(stream, info);
+			}
+			else
+			{
+				stream.SendNext(false);
+			}
+		}
+		else
+		{
+			// networked player; receive data
+			transform.position = (Vector3)stream.ReceiveNext();
+			if((bool) stream.ReceiveNext())
+			{
+				_gun.ReadData(stream, info);
+			}
+		}
+	}
+	
 	[RPC]
 	private void rpcSetTarget(string targetName)
 	{
