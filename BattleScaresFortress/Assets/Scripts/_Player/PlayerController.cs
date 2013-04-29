@@ -62,6 +62,10 @@ public class PlayerController : MonoBehaviour
 		_motor = GetComponent<CharacterMotor>();
 		
 		IsLocal = _photonView == null || _photonView.isMine;
+		foreach(NetworkedComponent component in _components)
+		{
+			component.IsLocal = IsLocal;
+		}
 		if(IsLocal)
 		{
 			foreach(GameObject obj in _disableIfLocal)
