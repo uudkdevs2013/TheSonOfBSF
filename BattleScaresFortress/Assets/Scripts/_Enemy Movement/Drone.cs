@@ -61,8 +61,11 @@ public class Drone : MonoBehaviour
 					closestDistance = distance;
 				}
 			}
-			_photonView.RPC("rpcSetTarget", PhotonTargets.Others, closestPlayer.photonView.owner.name);
-			target = closestPlayer.gameObject;
+			if (closestPlayer != null)
+			{
+				_photonView.RPC("rpcSetTarget", PhotonTargets.Others, closestPlayer.photonView.owner.name);
+				target = closestPlayer.gameObject;
+			}
 		}
 	}
 	
@@ -87,7 +90,8 @@ public class Drone : MonoBehaviour
 		if (terrainHeight < targetHeight)
 		{
 			hoverHeight = transform.position.y - targetHeight;
-		} else
+		}
+		else
 		{
 			hoverHeight = transform.position.y - terrainHeight;
 		}
@@ -113,7 +117,8 @@ public class Drone : MonoBehaviour
 		if (distanteToPlayer > minDistance)
 		{
 			transform.position += transform.forward * velocity * Time.deltaTime;
-		} else if (distanteToPlayer < minDistance)
+		}
+		else if (distanteToPlayer < minDistance)
 		{
 			//velocity = distanteToPlayer + minDistance;
 			transform.position += transform.forward * velocity * Time.deltaTime;
@@ -121,11 +126,12 @@ public class Drone : MonoBehaviour
 
 	}
 	
-	void TryFire() {
-			if (distanteToPlayer <= firingDistance)
-			{
-				float delta = Time.deltaTime;
-				_gun.UpdateFiring(delta, true);
-			}
+	void TryFire()
+	{
+		if (distanteToPlayer <= firingDistance)
+		{
+			float delta = Time.deltaTime;
+			_gun.UpdateFiring(delta, true);
+		}
 	}
 }
