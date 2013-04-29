@@ -15,7 +15,7 @@ public class Rocket : MonoBehaviour
 	
 	void Start()
 	{
-		IsLocal = true;
+		IsLocal = _photonView == null || _photonView.isMine;
 		_prevLoc = transform.position;
 	}
 	
