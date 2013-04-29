@@ -28,7 +28,9 @@ public class DroneGun : NetworkedComponent
 		}
 		_fireCounter -= delta;
 		if(_fireCounter < 0.0f)
+		{
 			_fireCounter = 0.0f;
+		}
 	}
 	
 	public void Fire()
@@ -42,6 +44,7 @@ public class DroneGun : NetworkedComponent
 			var player = rH.collider.gameObject.GetComponent<PlayerController>();
 			if (player != null)
 			{
+				print("applying damage to player");
 				player.ApplyDamage(_damage);
 			}
 			
@@ -60,8 +63,8 @@ public class DroneGun : NetworkedComponent
 	private Vector3 GetInaccuracy(Transform source, float amount)
 	{
 		Vector3 result = source.forward;
-		result += (Random.Range(-1.0f, 1.0f) * amount) * source.up;
-		result += (Random.Range(-1.0f, 1.0f) * amount) * source.right;
+		result += (Random.Range(-0.5f, 0.5f) * amount) * source.up;
+		result += (Random.Range(-0.5f, 0.5f) * amount) * source.right;
 		return result.normalized;
 	}
 	
