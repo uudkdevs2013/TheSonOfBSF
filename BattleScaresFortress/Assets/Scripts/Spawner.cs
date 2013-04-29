@@ -4,6 +4,9 @@ using System.Collections;
 public class Spawner : MonoBehaviour
 {
 	
+	[SerializeField] private string _ammoPrefab;
+	[SerializeField] private GameObject[] _ammoSpawnPoints;
+	
 	[SerializeField] private string[] _enemies;
 	[SerializeField] private string[] _toughEnemies;
 	[SerializeField] private GameObject[] _spawnPoints;
@@ -122,12 +125,29 @@ public class Spawner : MonoBehaviour
 		_enemiesLeftToSpawn -= numberOfEnemiesToSpawn;
 	}
 	
+	private void SpawnAmmo(int amountOfAmmoToSpawn)
+	{
+		for (int i = 0; i < amountOfAmmoToSpawn; ++i)
+		{
+			int spawnIndex = (int)(Random.value * ((float)_ammoSpawnPoints.Length));
+			
+			var deltaPosition = new Vector2(Random.value * 2 - 1, Random.value * 2 - 1);
+			deltaPosition *= _maxSpawnRange;
+			var spawnPosition = _ammoSpawnPoints[spawnIndex].transform.position + new Vector3(deltaPosition.x, 0, deltaPosition.y);
+			
+			spawnPosition.y = Terrain.activeTerrain.SampleHeight(spawnPosition) + 2;
+			
+			PhotonNetwork.Instantiate(_ammoPrefab, spawnPosition, Quaternion.Euler(0, 0, 0), 0);
+		}
+	}
+	
 	private void GoToNextWave()
 	{
 		IsInWave = false;
 		++CurrentWave;
 		
 		LevelLoader.RespawnPlayer();
+		SpawnAmmo(CurrentWave * 3 / 2);
 		
 		StartCoroutine(WaitAndStartWave());
 	}
