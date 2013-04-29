@@ -12,9 +12,10 @@ public class HealSphere : MonoBehaviour
 	[SerializeField] private float _timeToLive = 15;
 	
 	[SerializeField] private float _moveSpeed = 1;
+	[SerializeField] private float _range = 50;
 	private Vector3 _fireDirection;
 	private bool _isFiring = true;
-	
+	private Vector3 _startPosition;
 	
 	
 	private Dictionary<PlayerController, float> _playersBeingHealed;
@@ -33,6 +34,7 @@ public class HealSphere : MonoBehaviour
 	{
 		_fireDirection = (Vector3)(_photonView.instantiationData[0]);
 		_fireDirection.Normalize();
+		_startPosition = transform.position;
 	}
 	
 	private void Update()
@@ -50,6 +52,10 @@ public class HealSphere : MonoBehaviour
 			else
 			{
 				transform.position += _fireDirection * _moveSpeed * Time.deltaTime;
+			}
+			if (_photonView.isMine && Vector3.Distance(_startPosition, transform.position) > _range)
+			{
+				PhotonNetwork.Destroy(gameObject);
 			}
 		}
 		else if (_isGrowing)
