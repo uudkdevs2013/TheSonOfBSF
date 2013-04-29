@@ -19,7 +19,7 @@ public class Drone : MonoBehaviour
 	private float maxVelocity;										// Max following velocity
 	[SerializeField]
 	private float minDistance;										// Minimun distance to keep from player
-	private float distanteToPlayer;									// Current distance to player
+	private float distanceToPlayer;									// Current distance to player
 	private float velocity;											// Current following velocity
 	
 	[SerializeField] float firingDistance;
@@ -131,8 +131,8 @@ public class Drone : MonoBehaviour
 	private void followPlayer()
 	{
 		transform.LookAt(target.transform); 
-		distanteToPlayer = Vector3.Distance(transform.position, target.transform.position);
-		velocity = distanteToPlayer - minDistance;
+		distanceToPlayer = Vector3.Distance(transform.position, target.transform.position);
+		velocity = distanceToPlayer - minDistance;
 		if (velocity > maxVelocity)
 		{
 			velocity = maxVelocity;
@@ -144,7 +144,7 @@ public class Drone : MonoBehaviour
 	
 	void TryFire()
 	{
-		if (distanteToPlayer <= firingDistance)
+		if (distanceToPlayer <= firingDistance)
 		{
 			float delta = Time.deltaTime;
 			_gun.UpdateFiring(delta, true);

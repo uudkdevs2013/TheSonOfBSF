@@ -633,7 +633,7 @@ public class AstarPath : MonoBehaviour {
 	/** Logs a string while taking into account #logPathResults */
 	private static void AstarLog (string s) {
 		if (active == null) {
-			Debug.Log ("No AstarPath object was found : "+s);
+			//Debug.Log ("No AstarPath object was found : "+s);
 			return;
 		}
 		
@@ -650,7 +650,7 @@ public class AstarPath : MonoBehaviour {
 		}
 		
 		if (active.logPathResults != PathLog.None) {
-			Debug.LogError (s);
+			//Debug.LogError (s);
 		}
 	}
 #line default
@@ -1824,7 +1824,7 @@ AstarPath.RegisterSafeUpdate (delegate () {
 	public static void StartPath (Path p) {
 		
 		if (active == null) {
-			Debug.LogError ("There is no AstarPath object in the scene");
+			//Debug.LogError ("There is no AstarPath object in the scene");
 			return;
 		}
 		
@@ -1842,10 +1842,10 @@ AstarPath.RegisterSafeUpdate (delegate () {
 		}
 		
 		if (active.graphs == null || active.graphs.Length == 0) {
-			Debug.LogError ("There are no graphs in the scene");
+			//Debug.LogError ("There are no graphs in the scene");
 			p.Error ();
 			p.LogError ("There are no graphs in the scene");
-			Debug.LogError (p.errorLog);
+			//Debug.LogError (p.errorLog);
 			//p.ReturnPath ();
 			return;
 		}
@@ -2172,7 +2172,7 @@ AstarPath.RegisterSafeUpdate (delegate () {
 				System.Threading.Interlocked.Decrement (ref numActiveThreads);
 				return;
 			}
-			Debug.LogError (e);
+			//Debug.LogError (e);
 		}
 		
 		Debug.LogError ("Error : This part should never be reached");
@@ -2385,7 +2385,7 @@ AstarPath.RegisterSafeUpdate (delegate () {
 			}
 		}
 		
-		//Debug.LogError ("Error : This part should never be reached");
+		Debug.LogError ("Error : This part should never be reached");
 		//System.Threading.Interlocked.Decrement (ref numActiveThreads);
 	}
 #endregion
