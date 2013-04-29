@@ -102,25 +102,7 @@ public class Spawner : MonoBehaviour
 		yield return new WaitForSeconds(_breakTimeBetweenWaves);
 		
 		_enemiesLeftToSpawn = CurrentWave * 4;
-		if (CurrentWave % 3 == 0)
-		{
-			SpawnValkyrie();
-			if (CurrentWave == 3)
-			{
-				_enemiesLeftToSpawn = 0;
-			}
-			else
-			{
-				_enemiesLeftToSpawn /= 2;
-			}
-		}
-		
 		IsInWave = true;
-	}
-	
-	private void SpawnValkyrie()
-	{
-#warning need to spawn the Valkyrie
 	}
 	
 }
