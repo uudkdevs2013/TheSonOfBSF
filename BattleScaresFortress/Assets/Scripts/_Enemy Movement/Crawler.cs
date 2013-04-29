@@ -8,36 +8,28 @@ public class Crawler : MonoBehaviour
 	PhotonView _photonView;
 	
 	// Player following-related
-	[SerializeField]
-	private float maxVelocity;										// Max following velocity
-	[SerializeField]
-	private float minDistance;										// Minimun distance to keep from player
-	private float distanceToPlayer;									// Current distance to player
-	private float velocity;			
+	[SerializeField] private float _maxVelocity;						// Max following velocity
+	[SerializeField] private float _minDistance;						// Minimun distance to keep from player
+	private float _distanceToPlayer;									// Current distance to player
+	private float _velocity;			
 	
 	// Hover-related 
-	[SerializeField]
-	private float desiredHeight;									// The desired height the object should hover
-	private float hoverHeight;										// The current hover height
-	[SerializeField]
-	private float hoverVelocity;									// The hover velocity 
+	[SerializeField] private float _desiredHeight;						// The desired height the object should hover
+	private float _hoverHeight;											// The current hover height
+	[SerializeField] private float _hoverVelocity;						// The hover velocity 
 	
 	// Target
-	[SerializeField]
-	private GameObject target = null;
-	[SerializeField]
-	float firingDistance;
-	float fireCounter;
-	[SerializeField]
-	float fireInterval;
-	[SerializeField]
-	private CrawlerGun _gun;
-	bool isPathing;
+	[SerializeField] private GameObject _target = null;					// The Crawler current target
+	[SerializeField] private float _firingDistance;						// Firing distance. Is set to the guns's distance
+	[SerializeField] private float _fireInterval;						// Fire rate
+	[SerializeField] private CrawlerGun _gun;			
+	private float _fireTimer;											// Timer for fire rate							
+	private bool _isPathing;
 	
 	// Use this for initialization
 	private void Start()
 	{
-		firingDistance = _gun.Range;
+		_firingDistance = _gun.Range;
 		if (_photonView.isMine)
 		{
 			StartCoroutine(FindNewTarget());
@@ -47,15 +39,15 @@ public class Crawler : MonoBehaviour
 	// Update is called once per frame
 	private void Update()
 	{
-		if (_photonView.isMine && target == null)
+		if (_photonView.isMine && _target == null)
 		{
 			FindTarget();
 		}
 		
-		if (target != null)
+		if (_target != null)
 		{
-			isPathing = GetComponent<AstarAI>().inPathArea;
-			if (!isPathing)
+			_isPathing = GetComponent<AstarAI>().inPathArea;
+			if (!_isPathing)
 			{
 				maintainHeight();
 				followPlayer();
@@ -90,7 +82,7 @@ public class Crawler : MonoBehaviour
 			if (closestPlayer != null)
 			{
 				_photonView.RPC("rpcSetTarget", PhotonTargets.Others, closestPlayer.photonView.owner.name);
-				target = closestPlayer.gameObject;
+				_target = closestPlayer.gameObject;
 			}
 		}
 	}
@@ -102,7 +94,7 @@ public class Crawler : MonoBehaviour
 		{
 			if (player.photonView.owner.name == targetName)
 			{
-				target = player.gameObject;
+				_target = player.gameObject;
 				break;
 			}
 		}
@@ -112,8 +104,8 @@ public class Crawler : MonoBehaviour
 	{
 		if (_photonView.isMine)
 		{
-			distanceToPlayer = Vector3.Distance(transform.position, target.transform.position);
-			if (distanceToPlayer <= firingDistance)
+			_distanceToPlayer = Vector3.Distance(transform.position, _target.transform.position);
+			if (_distanceToPlayer <= _firingDistance)
 			{
 				float delta = Time.deltaTime;
 				_gun.UpdateFiring(delta, true);
@@ -135,12 +127,12 @@ public class Crawler : MonoBehaviour
 	{
 		float terrainHeight = Terrain.activeTerrain.SampleHeight(transform.position);
 
-		hoverHeight = transform.position.y - terrainHeight;
+		_hoverHeight = transform.position.y - terrainHeight;
 		
-		if (hoverHeight != desiredHeight)
+		if (_hoverHeight != _desiredHeight)
 		{
 			Vector3 newPos = transform.position;	
-			newPos.y += (desiredHeight - hoverHeight) * hoverVelocity;
+			newPos.y += (_desiredHeight - _hoverHeight) * _hoverVelocity;
 			transform.position = newPos;
 		}
 	}
@@ -148,15 +140,15 @@ public class Crawler : MonoBehaviour
 	// Making it follow the target
 	private void followPlayer()
 	{
-		transform.LookAt(target.transform); 
-		distanceToPlayer = Vector3.Distance(transform.position, target.transform.position);
-		velocity = distanceToPlayer - minDistance;
-		if (velocity > maxVelocity)
+		transform.LookAt(_target.transform); 
+		_distanceToPlayer = Vector3.Distance(transform.position, _target.transform.position);
+		_velocity = _distanceToPlayer - _minDistance;
+		if (_velocity > _maxVelocity)
 		{
-			velocity = maxVelocity;
+			_velocity = _maxVelocity;
 		}
 
-		transform.position += transform.forward * velocity * Time.deltaTime;
+		transform.position += transform.forward * _velocity * Time.deltaTime;
 
 	}
 	
