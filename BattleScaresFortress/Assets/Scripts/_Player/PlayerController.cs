@@ -21,6 +21,7 @@ public class PlayerController : MonoBehaviour
 	
 	[SerializeField] private GameObject[] _disableIfLocal;
 	[SerializeField] private GameObject[] _disableIfNetworked;
+	[SerializeField] private GUISkin _guiSkin;
 	
 	public bool IsLocal { get; set; }
 	
@@ -30,6 +31,7 @@ public class PlayerController : MonoBehaviour
 	private float _minAimY = -60;
 	private float _maxAimY = 60;
 	protected float _health = 50;
+	protected float _maxHealth = 50;
 	
 	protected Vector2 _aim = new Vector2(0, 0);
 	protected Vector2 _aimSensitivity = new Vector2(15, 15);
@@ -80,21 +82,23 @@ public class PlayerController : MonoBehaviour
 	
 	protected void OnGUI()
 	{
-		if (_health > 30)
+		if(IsLocal)
 		{
-			GUI.color = Color.green;
+			GUI.skin = _guiSkin;
+			
+			if (_health > 30)
+				GUI.color = Color.green;
+			else if (_health > 15)
+				GUI.color = Color.yellow;
+			else
+				GUI.color = Color.red;
+			
+			int w = Screen.width;
+			int h = Screen.height;
+			GUI.Label(new Rect(w * 0.75f, 20, w * 0.25f, 40), "HP: " + _health);
+			
+			GUI.color = Color.white;
 		}
-		else if (_health > 15)
-		{
-			GUI.color = Color.yellow;
-		}
-		else
-		{
-			GUI.color = Color.red;
-		}
-		GUI.Label(new Rect(Screen.width - 150, 20, 150, 20), "Health: " + _health);
-		
-		GUI.color = Color.white;
 	}
 	
 	protected virtual void Update()
@@ -204,6 +208,25 @@ public class PlayerController : MonoBehaviour
 		if (_health < 0)
 		{
 			Die();
+		}
+	}
+	
+	public void ApplyHeal(float amountOfHeal)
+	{
+		if (_health >= _maxHealth)
+		{
+			return;
+		}
+		_photonView.RPC("rpcApplyHeal", PhotonTargets.All, amountOfHeal);
+	}
+	
+	[RPC]
+	protected void rpcApplyHeal(float amountOfHeal)
+	{
+		_health += amountOfHeal;
+		if (_health > _maxHealth)
+		{
+			_health = _maxHealth;
 		}
 	}
 	

@@ -4,6 +4,7 @@ using System.Collections;
 public class Tank : PlayerController
 {
 	[SerializeField] private Minigun _minigun;
+	[SerializeField] private RocketLauncher _rocketLauncher;
 	
 	protected override void Start()
 	{
@@ -19,6 +20,10 @@ public class Tank : PlayerController
 		{
 			float delta = Time.deltaTime;
 			_minigun.UpdateFiring(delta, Input.GetMouseButton(0));
+			if(Input.GetMouseButtonDown(1))
+			{
+				_rocketLauncher.Fire();
+			}
 		}
 	}
 }

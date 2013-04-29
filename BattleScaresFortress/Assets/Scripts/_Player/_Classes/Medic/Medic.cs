@@ -4,6 +4,7 @@ using System.Collections;
 public class Medic : PlayerController
 {
 	[SerializeField] private Pistol _pistol;
+	[SerializeField] private HealSphereGun _healGun;
 	
 	protected override void Start()
 	{
@@ -24,7 +25,7 @@ public class Medic : PlayerController
 			
 			if(Input.GetMouseButtonDown(0))
 			{
-				
+				_healGun.Fire();
 			}
 			
 			if(Input.GetKeyDown(KeyCode.R))
