@@ -34,6 +34,7 @@ public class Crawler : MonoBehaviour
 		{
 			StartCoroutine(FindNewTarget());
 		}
+		_gun.IsLocal = (_photonView == null || _photonView.isMine);
 	}
 	
 	// Update is called once per frame
@@ -52,10 +53,7 @@ public class Crawler : MonoBehaviour
 				maintainHeight();
 				followPlayer();
 			}
-			if (_photonView.isMine)
-			{
-				TryFire();
-			}
+			TryFire();
 		}
 		
 		if (_photonView.isMine && transform.position.y < -100)
@@ -87,6 +85,7 @@ public class Crawler : MonoBehaviour
 		}
 	}
 	
+	/*
 	protected void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
 	{
 		if (stream.isWriting)
@@ -111,7 +110,7 @@ public class Crawler : MonoBehaviour
 				_gun.ReadData(stream, info);
 			}
 		}
-	}
+	}*/
 	
 	[RPC]
 	private void rpcSetTarget(string targetName)
@@ -128,14 +127,11 @@ public class Crawler : MonoBehaviour
 	
 	private void TryFire()
 	{
-		if (_photonView.isMine)
+		_distanceToPlayer = Vector3.Distance(transform.position, _target.transform.position);
+		if (_distanceToPlayer <= _firingDistance)
 		{
-			_distanceToPlayer = Vector3.Distance(transform.position, _target.transform.position);
-			if (_distanceToPlayer <= _firingDistance)
-			{
-				float delta = Time.deltaTime;
-				_gun.UpdateFiring(delta, true);
-			}
+			float delta = Time.deltaTime;
+			_gun.UpdateFiring(delta, true);
 		}
 	}
 	

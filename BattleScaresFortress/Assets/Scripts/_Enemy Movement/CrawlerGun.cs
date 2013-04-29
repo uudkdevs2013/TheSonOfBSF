@@ -51,7 +51,7 @@ public class CrawlerGun : NetworkedComponent
 		{
 			// Handle damage
 			var player = rH.collider.gameObject.GetComponent<PlayerController>();
-			if (player != null)
+			if (player != null && IsLocal)
 			{
 				player.ApplyDamage(_damage);
 			}
@@ -64,7 +64,7 @@ public class CrawlerGun : NetworkedComponent
 			FireEffect(_firePoint, _firePoint.position + (_range * _firePoint.forward));
 		}
 		FireEffect(_firePoint, hit);
-		_fireTargets.AddLast(hit);
+		//_fireTargets.AddLast(hit);
 		_fireSound.Play();
 	}
 	

@@ -41,8 +41,9 @@ public class Drone : MonoBehaviour
 			_firingDistance = _gun.Range;
 			StartCoroutine(FindNewTarget());
 		}
+		_gun.IsLocal = (_photonView == null || _photonView.isMine);
 	}
-	
+	/*
 	protected void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
 	{
 		if (stream.isWriting)
@@ -67,7 +68,7 @@ public class Drone : MonoBehaviour
 				_gun.ReadData(stream, info);
 			}
 		}
-	}
+	}*/
 	
 	// Update is called once per frame
 	private void Update()
