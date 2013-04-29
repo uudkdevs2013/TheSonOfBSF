@@ -94,6 +94,7 @@ public class Drone : MonoBehaviour
 				MaintainHeight();
 				Strafe();
 				FollowPlayer();
+				TryFire();
 			}
 		}
 	}
