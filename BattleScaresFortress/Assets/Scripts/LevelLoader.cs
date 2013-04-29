@@ -9,7 +9,7 @@ public class LevelLoader : MonoBehaviour
 	
 	public static LevelLoader Instance { get; private set; }
 	private bool _isRespawningPlayer = false;
-	private float _timeUntilRespawn = 0f;
+	private bool _playerIsDead = true;
 	
 	private void Awake()
 	{
@@ -31,23 +31,6 @@ public class LevelLoader : MonoBehaviour
 		}
 		
 		RespawnPlayer();
-		
-//		if (PhotonNetwork.isMasterClient)
-//		{
-//			SpawnSniper(new Vector3(1006, 50, 1042));
-//		}
-//		else
-//		{
-//			SpawnSniper(new Vector3(1010, 50, 1050));
-//		}
-	}
-	
-	private void Update()
-	{
-		if (_isRespawningPlayer)
-		{
-			_timeUntilRespawn -= Time.deltaTime;
-		}
 	}
 	
 	private GameObject SpawnSniper(Vector3 position)
@@ -70,61 +53,53 @@ public class LevelLoader : MonoBehaviour
 		return PhotonNetwork.Instantiate("Players/Medic", position, Quaternion.Euler(0, 0, 0), 0);
 	}
 	
-	public static void RespawnPlayer()
+	public static void ShowSpectatorCameras()
 	{
-		Instance.RespawnLocalPlayer();
+		Instance._loaderCamera.enabled = true;
+		Instance._crossHairs.enabled = false;
 	}
 	
-	private void RespawnLocalPlayer()
+	public static void RespawnPlayer()
 	{
-//		SpawnSniper(new Vector3(1006, 50, 1042));
-		print("respawning player");
-		_isRespawningPlayer = true;
-		_loaderCamera.enabled = true;
-		_crossHairs.enabled = false;
-		_timeUntilRespawn = 0f;
+		if (Instance._playerIsDead)
+		{
+			Instance._playerIsDead = false;
+			Instance._isRespawningPlayer = true;
+		}
 	}
 	
 	private void OnGUI()
 	{
 		if (_isRespawningPlayer)
 		{
-			if (_timeUntilRespawn > 0)
+			GUI.Label(new Rect(50, 50, 200, 20), "Select Your Class:");
+			if (GUI.Button(new Rect(100, 100, 200, 30), "Sniper"))
 			{
-				int timeLeft = (int)_timeUntilRespawn;
-				GUI.Label(new Rect(50, 50, 200, 20), "Time until respawn: " + timeLeft);
+				_isRespawningPlayer = false;
+				_loaderCamera.enabled = false;
+				_crossHairs.enabled = true;
+				SpawnSniper(new Vector3(1006, 50, 1042));
 			}
-			else
+			if (GUI.Button(new Rect(100, 140, 200, 30), "Tank"))
 			{
-				GUI.Label(new Rect(50, 50, 200, 20), "Select Your Class:");
-				if (GUI.Button(new Rect(100, 100, 200, 30), "Sniper"))
-				{
-					_isRespawningPlayer = false;
-					_loaderCamera.enabled = false;
-					_crossHairs.enabled = true;
-					SpawnSniper(new Vector3(1006, 50, 1042));
-				}
-				if (GUI.Button(new Rect(100, 140, 200, 30), "Tank"))
-				{
-					_isRespawningPlayer = false;
-					_loaderCamera.enabled = false;
-					_crossHairs.enabled = true;
-					SpawnTank(new Vector3(1006, 50, 1042));
-				}
-				if (GUI.Button(new Rect(100, 180, 200, 30), "Medic"))
-				{
-					_isRespawningPlayer = false;
-					_loaderCamera.enabled = false;
-					_crossHairs.enabled = true;
-					SpawnMedic(new Vector3(1006, 50, 1042));
-				}
-				if (GUI.Button(new Rect(100, 220, 200, 30), "Grenadier"))
-				{
-					_isRespawningPlayer = false;
-					_loaderCamera.enabled = false;
-					_crossHairs.enabled = true;
-					SpawnGrenadier(new Vector3(1006, 50, 1042));
-				}
+				_isRespawningPlayer = false;
+				_loaderCamera.enabled = false;
+				_crossHairs.enabled = true;
+				SpawnTank(new Vector3(1006, 50, 1042));
+			}
+			if (GUI.Button(new Rect(100, 180, 200, 30), "Medic"))
+			{
+				_isRespawningPlayer = false;
+				_loaderCamera.enabled = false;
+				_crossHairs.enabled = true;
+				SpawnMedic(new Vector3(1006, 50, 1042));
+			}
+			if (GUI.Button(new Rect(100, 220, 200, 30), "Grenadier"))
+			{
+				_isRespawningPlayer = false;
+				_loaderCamera.enabled = false;
+				_crossHairs.enabled = true;
+				SpawnGrenadier(new Vector3(1006, 50, 1042));
 			}
 		}
 	}
