@@ -5,6 +5,7 @@ public class HealSphereGun : NetworkedComponent
 {
 	[SerializeField] private Transform _firePoint;
 	[SerializeField] private float _cooldownTime = 20;
+	[SerializeField] private GUISkin _guiSkin;
 	private float _timeLeftInCooldown = 0;
 	
 	public void Fire()
@@ -25,7 +26,7 @@ public class HealSphereGun : NetworkedComponent
 		}
 	}
 	
-	public void OnGUI()
+	void OnGUI()
 	{
 		if(IsLocal)
 		{
@@ -36,12 +37,12 @@ public class HealSphereGun : NetworkedComponent
 			if (_timeLeftInCooldown <= 0)
 			{
 				GUI.color = Color.white;
-				GUI.Label(new Rect(0f, h * 0.85f, w * 0.25f, h * 0.15f), "Heal Ready");
+				GUI.Label(new Rect(w * 0.75f, h * 0.85f, w * 0.25f, h * 0.15f), "Heal Ready");
 			}
 			else
 			{
 				GUI.color = Color.red;
-				GUI.Label(new Rect(0f, h * 0.85f, w * 0.25f, h * 0.15f), "Recharging: " + (int) _timeLeftInCooldown);
+				GUI.Label(new Rect(w * 0.75f, h * 0.85f, w * 0.25f, h * 0.15f), "Recharging: " + (int) _timeLeftInCooldown);
 			}
 			
 			GUI.color = Color.white;

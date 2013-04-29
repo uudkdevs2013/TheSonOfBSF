@@ -52,6 +52,6 @@ public class Sniper : PlayerController
 	
 	public override void PerformAmmoRefill()
 	{
-		_refiles.RefillAmmo();
+		_rifles.RefillAmmo();
 	}
 }
