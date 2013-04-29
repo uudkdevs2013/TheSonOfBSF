@@ -5,12 +5,17 @@ public class Enemy : MonoBehaviour
 {
 	
 	[SerializeField] PhotonView _photonView;
-	
-	public float Health { get; private set; }
+	[SerializeField] private float _health;
+	public float Health 
+	{
+		get
+		{
+			return _health;
+		}
+	}
 	
 	private void Awake()
 	{
-		Health = 10;
 		if (_allEnemies == null)
 		{
 			_allEnemies = new List<Enemy>();
@@ -28,8 +33,8 @@ public class Enemy : MonoBehaviour
 	private void rpcApplyDamage(float amountOfDamage)
 	{
 		print("rpc enemy apply damage");
-		Health -= amountOfDamage;
-		if (Health < 0)
+		_health -= amountOfDamage;
+		if (_health < 0)
 		{
 			Die();
 		}
