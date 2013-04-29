@@ -173,13 +173,15 @@ public class PlayerController : MonoBehaviour
 	
 	public void ApplyDamage(float amountOfDamage)
 	{
+		print("player receiving damage");
 		_photonView.RPC("rpcApplyDamage", PhotonTargets.All, amountOfDamage);
 	}
 	
 	[RPC]
-	private void rpcApplyDamage(float amountOfDamage)
+	protected void rpcApplyDamage(float amountOfDamage)
 	{
 		_health -= amountOfDamage;
+		print("health remaining: " + _health);
 		if (_health < 0)
 		{
 			Die();
@@ -188,6 +190,7 @@ public class PlayerController : MonoBehaviour
 	
 	private void Die()
 	{
+		print("die    is mine: " + _photonView.isMine);
 		if (_photonView.isMine)
 		{
 			PhotonNetwork.Destroy(gameObject);
