@@ -14,7 +14,9 @@ public class Explosion : MonoBehaviour
 	void Start()
 	{
 		foreach(ParticleEmitter emitter in _emitters)
+		{
 			emitter.Emit();
+		}
 		_brightness = _light.intensity;
 		_radius = _light.range;
 		_counter = 1f;
@@ -24,7 +26,9 @@ public class Explosion : MonoBehaviour
 	{
 		_counter -= Time.deltaTime / _duration;
 		if(_counter <= 0.0f)
+		{
 			Destroy(gameObject);
+		}
 		else
 		{
 			_light.intensity = Mathf.Lerp(0f, _brightness, _counter);
